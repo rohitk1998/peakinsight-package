@@ -32,6 +32,7 @@ const CoverImages: React.FC<{ destinations: any[]; activities: any[] }> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = (category: string) => {
+    console.log('category',category);
     setIsModalOpen(true);
   };
 
