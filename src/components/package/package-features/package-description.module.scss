@@ -1,0 +1,165 @@
+@use "../../../styles/variables.scss" as *;
+
+.packageContainer {
+    width: 90%;
+    margin: 0 auto;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    padding: 1rem;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.packageInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+
+    div{
+        color: #090909;
+    }
+    // When screen is less than 830px, stack vertically
+    @media (max-width: 830px) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}
+
+.title {
+    font-size: 35px;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    color: #000000;
+}
+
+.locationInfo {
+    gap: 0.25rem;
+    color: #666;
+    font-size: 0.875rem;
+}
+
+.tripDaysInfo {
+    display: inline-flex;
+    align-items: start;
+    justify-content: start;
+    padding: 0.5rem 1rem;
+
+    // Transparent grey background
+    background: #ccf27f;
+    backdrop-filter: blur(10px);
+
+    // Beautiful rounded corners
+    border-radius: 2rem;
+
+    // Subtle border
+    // border: 1px solid rgba(212, 212, 212, 0.2);
+
+    // Typography
+    font-size: 14px;
+    font-weight: 400;
+    color: #343434 !important;
+    text-decoration: none;
+}
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1rem 0;
+}
+
+.featuresDestinations {
+    min-width: 270px;
+    width: 30%;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    padding: 0rem;
+    border-radius: 10px;
+    border: 1px solid #ff6f00;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+
+    .featureDestination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        letter-spacing: 0.5px;
+        font-size: 14px;
+        font-weight: 400;
+        color: #d05a00 !important;
+       
+
+        svg{
+            margin-right: 10px;
+            margin-left: 10px;
+            color: #a9a9a9 !important;
+        }
+    }
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    color: #000000;
+    font-size: 14px;
+    font-weight: 400;
+    border: 1px solid lightgray;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+}
+
+.featureIcon {
+    font-size: 1rem;
+}
+
+// Animations
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes textPulse {
+    0% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+
+    100% {
+        transform: scale(1.02);
+        filter: brightness(1.1);
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .title {
+        font-size: 2rem;
+        letter-spacing: 0.5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.75rem;
+    }
+}

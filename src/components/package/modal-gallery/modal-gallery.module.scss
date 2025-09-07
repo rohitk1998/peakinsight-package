@@ -1,0 +1,192 @@
+// Modal styles
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: $spacing-md;
+}
+
+.modalContent {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    max-width: 100vw;
+    max-height: 100vh;
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+
+    @media (max-width: 768px) {
+        border-radius: 0;
+        max-width: 100%;
+        max-height: 100%;
+        height: 100vh;
+        width: 100vw;
+    }
+}
+
+.modalHeader {
+    background-color: white;
+    padding: $spacing-lg $spacing-xl;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+    position: relative;
+    min-height: 70px;
+
+    @media (max-width: 768px) {
+        padding: $spacing-md $spacing-lg;
+        min-height: 60px;
+    }
+}
+
+.backButton {
+    gap: $spacing-xs;
+    background: none;
+    border: none;
+    color: #374151;
+    font-size: $font-size-base;
+    font-weight: 500;
+    cursor: pointer;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-md;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:active {
+        outline: none;
+    }
+
+    @media (max-width: 768px) {
+        font-size: $font-size-sm;
+        padding: $spacing-xs;
+    }
+}
+
+.backIcon {
+    width: 20px;
+    height: 20px;
+
+    @media (max-width: 768px) {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+.modalTitle {
+    color: #111827;
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+
+    @media (max-width: 768px) {
+        font-size: $font-size-lg;
+    }
+}
+
+.modalBody {
+    flex: 1;
+    background-color: white;
+    padding: $spacing-xl;
+    overflow-y: auto;
+
+    @media (max-width: 768px) {
+        padding: $spacing-lg;
+    }
+}
+
+.placeholderContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: #6b7280;
+
+    p {
+        margin: $spacing-sm 0;
+        font-size: $font-size-base;
+        line-height: 1.6;
+
+        strong {
+            color: #374151;
+        }
+    }
+
+    @media (max-width: 768px) {
+        p {
+            font-size: $font-size-sm;
+        }
+    }
+}
+
+// Update imageCard to show pointer cursor
+.imageCard {
+    position: relative;
+    overflow: hidden;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    transition: transform $transition-normal, box-shadow $transition-normal;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+
+        img {
+            transform: scale(1.05);
+        }
+
+        .overlay {
+            background: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0.2) 0%,
+                    rgba(0, 0, 0, 0.4) 50%,
+                    rgba(0, 0, 0, 0.8) 100%);
+        }
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform $transition-normal;
+    }
+}
+
+.modalImages {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $spacing-md;
+    padding: $spacing-md;
+    overflow-y: auto;
+
+}
+
+.modalImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    transition: transform $transition-normal;
+
+}
+
+.modalTitle {
+    font-size: 16px;
+    font-weight: 400;
+    color: $primary-color;
+    text-align: center;
+}

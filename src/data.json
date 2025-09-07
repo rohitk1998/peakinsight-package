@@ -1,0 +1,149 @@
+[
+    {
+        "dayNumber": 1,
+        "dayTitle": "Arrival at Shimla",
+        "dayDescription": "Pickup from Chandigarh, transfer to Shimla. Evening leisure walk on Mall Road.",
+        "mealPlanType": "Half Board",
+        "destination": "Shimla",
+        "stayType": "Resort",
+        "isTravelDay": true,
+        "travelFrom": "Chandigarh",
+        "travelTo": "Shimla",
+        "travelMode": "Sedan",
+        "durationHours": 4.5,
+        "distanceKm": 120,
+        "hasActivities": true,
+        "images": [
+            {
+                "id": null,
+                "position": 1,
+                "imageUrl": "https://cdn.peakinsight.in/packages/1/1/1/ba139f2a-b1c5-4925-883e-f912228c9086",
+                "originalFileName": null
+            },
+            {
+                "id": null,
+                "position": 2,
+                "imageUrl": "https://cdn.peakinsight.in/packages/1/1/1/a2ddf6d1-11b9-4439-938c-b4823abe444e",
+                "originalFileName": null
+            }
+        ],
+        "activities": [
+            {
+                "id": 1,
+                "position": 1,
+                "activityType": "Sightseeing",
+                "activityName": "Mall Road Walk",
+                "description": "Evening stroll on the famous Shimla Mall Road.",
+                "images": [
+                    {
+                        "id": null,
+                        "position": 1,
+                        "imageUrl": "https://cdn.peakinsight.in/packages/1/1/1/1/da342c28-cbcb-40f9-a4b3-362bae1204ff",
+                        "originalFileName": null
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "dayNumber": 2,
+        "dayTitle": "Manali Sightseeing",
+        "dayDescription": "Drive to Manali. Visit Hadimba Temple, Club House and Manu Temple.",
+        "mealPlanType": "Half Board",
+        "destination": "Manali",
+        "stayType": "Resort",
+        "isTravelDay": true,
+        "travelFrom": "Shimla",
+        "travelTo": "Manali",
+        "travelMode": "Sedan",
+        "durationHours": 5,
+        "distanceKm": 150,
+        "hasActivities": true,
+        "images": [
+            {
+                "id": null,
+                "position": 1,
+                "imageUrl": "https://cdn.peakinsight.in/packages/1/1/2/aaedf0e2-2624-4f50-bc76-945a021f67e3",
+                "originalFileName": null
+            },
+            {
+                "id": null,
+                "position": 2,
+                "imageUrl": "https://cdn.peakinsight.in/packages/1/1/2/678a6fcc-9251-4a32-abd9-39d6dfb9a8b1",
+                "originalFileName": null
+            }
+        ],
+        "activities": [
+            {
+                "id": 2,
+                "position": 1,
+                "activityType": "Sightseeing",
+                "activityName": "Hadimba Temple Visit",
+                "description": "Explore the historic Hadimba Devi Temple.",
+                "images": [
+                    {
+                        "id": null,
+                        "position": 1,
+                        "imageUrl": "https://cdn.peakinsight.in/packages/1/1/2/1/7f6af368-3839-4404-9916-aedc8ce4aa32",
+                        "originalFileName": null
+                    }
+                ]
+            },
+            {
+                "id": 3,
+                "position": 2,
+                "activityType": "River Rafting",
+                "activityName": "River Rafting",
+                "description": "Experience thrilling river rafting in Beas river.",
+                "images": [
+                    {
+                        "id": null,
+                        "position": 1,
+                        "imageUrl": "https://cdn.peakinsight.in/packages/1/1/2/2/1c6eb06c-bdc7-473a-be54-fa6802932bda",
+                        "originalFileName": null
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "dayNumber": 3,
+        "dayTitle": "Kasol Sightseeing",
+        "dayDescription": "Drive to Manali. Visit Hadimba Temple, Club House and Manu Temple.",
+        "mealPlanType": "All Inclusive",
+        "destination": "Kasol",
+        "stayType": "Tent",
+        "isTravelDay": true,
+        "travelFrom": "Manali",
+        "travelTo": "Kasol",
+        "travelMode": "Sedan",
+        "durationHours": 2,
+        "distanceKm": 50,
+        "hasActivities": true,
+        "images": [
+            {
+                "id": null,
+                "position": 1,
+                "imageUrl": "https://cdn.peakinsight.in/packages/1/1/3/1c6a8bdd-317f-4fea-bb7a-a6defff994e2",
+                "originalFileName": null
+            }
+        ],
+        "activities": [
+            {
+                "id": 4,
+                "position": 1,
+                "activityType": "Sightseeing",
+                "activityName": "River view point",
+                "description": "Enjoy river view.",
+                "images": [
+                    {
+                        "id": null,
+                        "position": 1,
+                        "imageUrl": "https://cdn.peakinsight.in/packages/1/1/3/1/93630601-ecfb-4117-b932-65ddab2a9c54",
+                        "originalFileName": null
+                    }
+                ]
+            }
+        ]
+    }
+]
