@@ -25,7 +25,7 @@ const Itinerary: React.FC<ItineraryProps> = ({ itineraryData }) => {
     <div className={styles.itineraryContainer}>
       <div className={styles.itineraryContent}>
         <div>
-          <label style={{ fontSize: '20px', fontWeight: 'normal', color: '#090909' }}>
+          <label style={{ fontSize: '16px', fontWeight: 'normal', color: '#090909' }}>
             Trip Duration
           </label>
         </div>

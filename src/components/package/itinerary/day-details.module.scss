@@ -48,7 +48,7 @@
 .dayDescription {
     color: #525252;
     line-height: 1.6;
-    margin: 0;
+    margin-top:10px;
     padding: 0;
     text-align: left;
     font-size: 14px;
@@ -61,58 +61,60 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
-    margin: 0;
+    margin-bottom:10px;
     padding: 0;
 }
 
 .mealBadge,
 .stayBadge,
 .travelBadge {
-    padding: 0.2rem 0.3rem;
+    padding: 0.3rem 0.6rem;
     border-radius: 3px;
-    font-size: 0.75rem;
+    font-size: 0.6rem;
     font-weight: 400;
     margin: 0;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.6px;
     transition: all 0.2s ease;
-    border: 1px solid #e5e5e5;
+    border: 1px solid #fc8e34;
+    border-radius: 20px;
+    color: black;
 }
 
-.mealBadge {
-    background: #f8f8f8;
-    color: #262626;
-    border-color: #d4d4d4;
+// .mealBadge {
+//     background: #f8f8f8;
+//     color: #262626;
+//     border-color: #d4d4d4;
 
-    &:hover {
-        background: #000000;
-        color: #ffffff;
-        border-color: #000000;
-    }
-}
+//     &:hover {
+//         background: #000000;
+//         color: #ffffff;
+//         border-color: #000000;
+//     }
+// }
 
-.stayBadge {
-    background: #ffffff;
-    color: #404040;
-    border-color: #a3a3a3;
+// .stayBadge {
+//     background: #ffffff;
+//     color: #404040;
+//     border-color: #a3a3a3;
 
-    &:hover {
-        background: #262626;
-        color: #ffffff;
-        border-color: #262626;
-    }
-}
+//     &:hover {
+//         background: #262626;
+//         color: #ffffff;
+//         border-color: #262626;
+//     }
+// }
 
-.travelBadge {
-    background: #f2f2f2;
-    color: #000000;
-    border-color: #000000;
+// .travelBadge {
+//     background: #f2f2f2;
+//     color: #000000;
+//     border-color: #000000;
 
-    &:hover {
-        background: #404040;
-        border-color: #404040;
-    }
-}
+//     &:hover {
+//         background: #404040;
+//         border-color: #404040;
+//     }
+// }
 
 // Travel Info
 .travelInfo {
@@ -797,7 +799,7 @@
 
 .travelCard {
     background: #ffffff;
-    border: 1px solid #f89e02;
+    border: 1px solid #dfdfdf;
     border-radius: 12px;
     padding: 1rem;
     margin: 1.5rem 0;
@@ -870,6 +872,18 @@
     color: #27272a;
 
     span {
+    height: 48px;
+    min-width: 320px;
+    width: 50%;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    padding: 0rem;
+    border-radius: 10px;
+    border: 1px solid #ff6f00;
+    background: #ff6f0015;
         line-height: 1.4;
     }
 }

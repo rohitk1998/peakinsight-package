@@ -79,16 +79,18 @@ const DayDetails: React.FC<DayDetailsProps> = ({ dayData }) => {
       <div className={styles.header}>
         <div className={styles.titleSection}>
           <h3 className={styles.dayTitle}>{dayData.dayTitle}</h3>
-          <p className={styles.dayDescription}>{dayData.dayDescription}</p>
-        </div>
-
-        <div className={styles.badges}>
+           <div className={styles.badges}>
           <span className={styles.mealBadge}>{dayData.mealPlanType}</span>
           <span className={styles.stayBadge}>{dayData.stayType}</span>
           {dayData.isTravelDay && (
             <span className={styles.travelBadge}>Travel Day</span>
           )}
         </div>
+        <hr className={styles.divider} />
+          <p className={styles.dayDescription}>{dayData.dayDescription}</p>
+        </div>
+
+       
       </div>
 
       <label style={{ fontSize: '16px', fontWeight: 'normal',color: '#2f4858' }}>
@@ -155,11 +157,9 @@ const DayDetails: React.FC<DayDetailsProps> = ({ dayData }) => {
           </div>
         </div>
       )}
-
 <label style={{ fontSize: '16px', fontWeight: 'normal',color: '#2f4858' }}>
           Views
         </label>
-
       {dayData.images && dayData.images.length > 0 && (
         <div className={styles.imagesSection}>
           <div className={styles.carouselContainer}>
@@ -173,7 +173,6 @@ const DayDetails: React.FC<DayDetailsProps> = ({ dayData }) => {
                   <ArrowLeftIcon width={30} height={30} />
                 </button>
               )}
-
               <div className={styles.imageContainer}>
                 <div
                   className={styles.imageSlider}
@@ -192,8 +191,6 @@ const DayDetails: React.FC<DayDetailsProps> = ({ dayData }) => {
                   ))}
                 </div>
               </div>
-
-              {/* Next Button */}
               {dayData.images.length > 1 && (
                 <button
                   className={styles.carouselButton}
@@ -204,8 +201,6 @@ const DayDetails: React.FC<DayDetailsProps> = ({ dayData }) => {
                 </button>
               )}
             </div>
-
-            {/* Dots Indicator */}
             {dayData.images.length > 1 && (
               <div className={styles.carouselDots}>
                 {getVisibleDots().map((dotIndex: number) => (
@@ -220,8 +215,6 @@ const DayDetails: React.FC<DayDetailsProps> = ({ dayData }) => {
                 ))}
               </div>
             )}
-
-            {/* Auto-play indicator */}
             <div className={styles.autoPlayIndicator}>
               <div
                 className={`${styles.autoPlayBar}`}

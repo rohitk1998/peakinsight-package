@@ -1,3 +1,4 @@
+import { icons } from './icons';
 import styles from './package-description.module.scss';
 
 interface PackageFeaturesProps {
@@ -13,25 +14,27 @@ const PackageFeatures = ({ packageDetails }: PackageFeaturesProps) => {
       </div>
       <div className={styles.packageInfo}>
         <div className={`${styles.tripDaysInfo}`}>
-          {packageDetails?.noOfDays} days / {packageDetails?.noOfNights} nights
+          {packageDetails?.noOfDays} d / {packageDetails?.noOfNights} n
         </div>
-        <div>Package Category : {packageDetails?.packageType}</div>
-        <div>Stay Category : {packageDetails?.stayCategory}</div>
+         <div className={`${styles.packageType}`}>
+          {packageDetails?.packageType}
+        </div>
+         <div className={`${styles.stayCategory}`}>
+          {packageDetails?.stayCategory}
+        </div>
       </div>
-      <div>
-        <label style={{ fontSize: '20px', fontWeight: 'normal',color: '#090909' }}>
-          Inclusions
-        </label>
-      </div>
+      <hr className={styles.divider} />
       <div className={styles.features}>
         {packageDetails?.inclusions?.map((feature: any) => (
           <div className={styles.feature}>
+            {icons[feature]}
             <span>{feature}</span>
           </div>
         ))}
       </div>
+      <hr className={styles.divider} />
       <div>
-        <label style={{ fontSize: '20px', fontWeight: 'normal',color: '#090909' }}>
+        <label style={{ fontSize: '16px', fontWeight: 'normal',color: '#090909' }}>
           Destination Routes
         </label>
       </div>
