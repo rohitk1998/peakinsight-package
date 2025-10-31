@@ -25,14 +25,13 @@ const ImageCard: React.FC<ImageCardProps> = ({
   );
 };
 
-const CoverImages: React.FC<{ destinations: any[]; activities: any[] }> = ({
-  destinations,
-  activities,
+const CoverImages: React.FC<{ imagesByCategory: any }> = ({
+  imagesByCategory,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = (category: string) => {
-    console.log('category',category);
+    console.log('category', category);
     setIsModalOpen(true);
   };
 
@@ -46,30 +45,34 @@ const CoverImages: React.FC<{ destinations: any[]; activities: any[] }> = ({
         <div className={styles.mainGrid}>
           <ImageCard
             title={''}
-            imageUrl={destinations[0]}
+            imageUrl={imagesByCategory?.all[0]}
             className={styles.largeImage}
             onClick={() => openModal('All Images')}
           />
 
           <div className={styles.smallGrid}>
-            {[...activities].slice(0, 4).map((category, index) => (
-              <ImageCard
-                key={index}
-                title={''}
-                imageUrl={category}
-                className={styles.smallImage}
-                onClick={() => openModal('Activities')}
-              />
-            ))}
+            {[
+              imagesByCategory?.stays[0],
+              imagesByCategory?.stays[1],
+              imagesByCategory?.activities[0],
+              imagesByCategory?.activities[2],
+            ]
+              .map((category, index) => (
+                <ImageCard
+                  key={index}
+                  title={''}
+                  imageUrl={category}
+                  className={styles.smallImage}
+                  onClick={() => openModal('Activities')}
+                />
+              ))}
 
             <div className={styles.viewAllCard}>
               <button
                 className={styles.viewAllButton}
                 onClick={() =>
                   openModal(
-                    `All Images (${
-                      [...destinations, ...activities].length || 0
-                    })`
+                    `All Images (${[...imagesByCategory?.all].length || 0})`
                   )
                 }
               >
@@ -96,8 +99,7 @@ const CoverImages: React.FC<{ destinations: any[]; activities: any[] }> = ({
       <ModalGallery
         isOpen={isModalOpen}
         onClose={closeModal}
-        activities={activities}
-        destinations={destinations}
+        allbum={imagesByCategory}
       />
     </section>
   );

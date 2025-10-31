@@ -1,25 +1,31 @@
 import { useEffect, useState } from 'react';
 import styles from './modal-gallery.module.scss';
+import FullScreenCarousel from '../corousal';
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  activities: any;
-  destinations: any;
+  allbum: any;
 }
 
-const ModalGallery: React.FC<ModalProps> = ({
-  isOpen,
-  onClose,
-  activities,
-  destinations,
-}) => {
+const ModalGallery: React.FC<ModalProps> = ({ isOpen, onClose, allbum }) => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [images, setImages] = useState<any[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [corousalImgIndex, setCorousalImgIndex] = useState(0);
+
+  const openModal = (index: number) => {
+    setCorousalImgIndex(index);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     setActiveCategory('all');
-    setImages([...destinations, ...activities]);
+    setImages(allbum?.all);
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -52,12 +58,12 @@ const ModalGallery: React.FC<ModalProps> = ({
             }}
             onClick={() => {
               setActiveCategory('all');
-              setImages([...destinations, ...activities]);
+              setImages(allbum?.all);
             }}
           >
-            All Images ({[...destinations, ...activities].length})
+            All Images ({allbum?.all?.length})
           </h2>
-          {['Destinations', 'Activities'].map((categorykey: any) => {
+          {['Stays', 'Activities'].map((categorykey: any) => {
             return (
               <h2
                 className={styles.modalTitle}
@@ -66,25 +72,35 @@ const ModalGallery: React.FC<ModalProps> = ({
                   cursor: 'pointer',
                 }}
                 onClick={() => {
-                  setActiveCategory(categorykey);
-                  if (categorykey === 'Destinations') {
-                    setImages(destinations);
+                  setActiveCategory(categorykey.toLowerCase());
+                  if (categorykey === 'Stays') {
+                    setImages(allbum?.stays);
+                  } else if (categorykey === 'Activities') {
+                    setImages(allbum?.activities);
                   } else {
-                    setImages(activities);
+                    setImages(allbum?.all);
                   }
                 }}
               >
                 {categorykey}{' '}
-                {categorykey === 'Destinations'
-                  ? `(${destinations.length})`
-                  : `(${activities.length})`}
+                {categorykey === 'Stays'
+                  ? `(${allbum?.stays.length})`
+                  : categorykey === 'Activities'
+                  ? `(${allbum?.activities.length})`
+                  : `(${allbum?.all.length})`}
               </h2>
             );
           })}
         </div>
         <div className={styles.modalImages}>
           {images.map((image: any, index: any) => (
-            <div key={index} className={styles.modalImage}>
+            <div
+              key={index}
+              className={styles.modalImage}
+              onClick={() => {
+                openModal(index);
+              }}
+            >
               <img
                 loading="lazy"
                 decoding="async"
@@ -96,6 +112,18 @@ const ModalGallery: React.FC<ModalProps> = ({
           ))}
         </div>
       </div>
+      <FullScreenCarousel
+        images={
+          activeCategory === 'stays'
+            ? allbum?.stays
+            : activeCategory === 'activities'
+            ? allbum?.activities
+            : allbum?.all
+        }
+        imgIndex={corousalImgIndex}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      />
     </div>
   );
 };
