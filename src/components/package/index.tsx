@@ -21,7 +21,6 @@ const Package = () => {
     activities:[]
   });
 
-  console.log('URL Params:', { id, agencyId, userId });
 
   const searchPackageDetails = async (
     id: number,
@@ -43,8 +42,6 @@ const Package = () => {
     const response = {
       data:data
     };
-
-    console.log(response.data, 'response.data');
     setPackageDetails(response?.data?.body);
   };
 
@@ -70,7 +67,7 @@ const Package = () => {
     <div>
       <CoverImages imagesByCategory={imagesByCategory} />
       <PackageDescription packageDetails={packageDetails} />
-      <Itinerary itineraryData={packageDetails?.days} />
+      <Itinerary packageDetail={packageDetails} />
     </div>
   );
 };

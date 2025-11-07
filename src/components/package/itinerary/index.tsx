@@ -1,25 +1,44 @@
 import React, { useState } from 'react';
 import styles from './itinerary.module.scss';
-import DayDetails from './day-details';
+import ItineraryDetails from './itinerary-details';
+
+const tabs = [
+  {
+    id : 1 , 
+    name:'Itinerary'
+  },
+  {
+    id : 2 , 
+    name:'Summarised View'
+  },
+  {
+    id : 3 , 
+    name:'Activities'
+  },
+  {
+    id : 4 , 
+    name:'Stay'
+  },
+  {
+    id : 5 , 
+    name:'Transfers'
+  }
+]
 
 interface ItineraryProps {
-  itineraryData: any[]; 
+  packageDetail: any; 
 }
 
-const Itinerary: React.FC<ItineraryProps> = ({ itineraryData }) => {
-  const [selectedDay, setSelectedDay] = useState(1); 
+const Itinerary: React.FC<ItineraryProps> = ({ packageDetail }) => {
+  const [activetab, setActiveTab] = useState(1); 
 
-  if (!itineraryData || itineraryData.length === 0) {
+  if (!packageDetail || packageDetail?.days?.length === 0) {
     return (
       <div className={styles.itineraryContainer}>
         <p>No itinerary data available</p>
       </div>
     );
   }
-
-  const selectedDayData = itineraryData.find(
-    (day) => day.dayNumber === selectedDay
-  );
 
   return (
     <div className={styles.itineraryContainer}>
@@ -31,21 +50,20 @@ const Itinerary: React.FC<ItineraryProps> = ({ itineraryData }) => {
         </div>
 
         <div className={styles.tabs}>
-          {itineraryData.map((day) => (
+          {tabs.map((tab) => (
             <button
-              key={day.dayNumber}
+              key={tab.id}
               className={`${styles.tab} ${
-                selectedDay === day.dayNumber ? styles.active : ''
+                activetab === tab.id ? styles.active : ''
               }`}
-              onClick={() => setSelectedDay(day.dayNumber)}
+              onClick={() => setActiveTab(tab.id)}
             >
-              <span className={styles.dayNumber}>Day {day.dayNumber}</span>
+              <span className={styles.dayNumber}>{tab.name}</span>
             </button>
           ))}
         </div>
-
         <div className={styles.tabContent}>
-          {selectedDayData && <DayDetails dayData={selectedDayData} />}
+        {activetab === 1 && <ItineraryDetails packageDetail={packageDetail} />}
         </div>
       </div>
     </div>

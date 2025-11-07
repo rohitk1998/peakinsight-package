@@ -15,12 +15,11 @@
 
     .tabs {
         display: flex;
-        gap: 0.5rem;
+        gap: 1.5rem;
         margin-top: 2rem;
         overflow-x: auto;
         padding: 1rem;
-        padding-left: 0;
-
+        background-color: #f3f3f3;
         @media (max-width: 768px) {
             gap: 0.25rem;
         }
@@ -33,29 +32,22 @@
         align-items: center;
         justify-content: center;
         padding: 0.5rem 1rem;
-        border-color: #ccf27f;
-        background: transparent;
-        color: #000000;
+        background: #ffffff;
+        color: #8d8d8d;
         overflow: hidden;
         cursor: pointer;
         transition: all 0.3s ease;
         min-width: 120px;
         outline: none;
-        font-size: 0.75rem;
-        font-weight: 500;
+        font-size: 14px;
+        font-weight: 400;
         letter-spacing: 0.5px;
         height: 40px;
-
-        &:hover {
-            background: #ccf27f;
-            transform: translateY(-2px);
-            overflow: hidden;
-        }
+        border:none;
 
         &.active {
-            border-color: #f3f3f3;
             color: #ffffff;
-            background: #000000;
+            background: #f88132;
             transform: translateY(-2px);
             overflow: hidden;
         }

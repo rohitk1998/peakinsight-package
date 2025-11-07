@@ -31,7 +31,6 @@ const CoverImages: React.FC<{ imagesByCategory: any }> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = (category: string) => {
-    console.log('category', category);
     setIsModalOpen(true);
   };
 

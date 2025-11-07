@@ -6,7 +6,6 @@ interface PackageFeaturesProps {
 }
 
 const PackageFeatures = ({ packageDetails }: PackageFeaturesProps) => {
-  console.log(packageDetails, 'packageDetails');
   return (
     <div className={styles.packageContainer}>
       <div className={styles.locationInfo}>
