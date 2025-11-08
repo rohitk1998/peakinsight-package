@@ -41,7 +41,6 @@ const FullScreenCarousel: React.FC<ModalProps> = ({
   };
 
   const goToNext = () => {
-    console.log('goToNext', imagesList);
     setCurrentIndex((prevIndex: number) =>
       prevIndex === imagesList.length - 1 ? 0 : prevIndex + 1
     );
