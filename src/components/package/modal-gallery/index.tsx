@@ -6,10 +6,11 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   allbum: any;
+  activeCategory: string;
 }
 
-const ModalGallery: React.FC<ModalProps> = ({ isOpen, onClose, allbum }) => {
-  const [activeCategory, setActiveCategory] = useState<string>('all');
+const ModalGallery: React.FC<ModalProps> = ({ isOpen, onClose, allbum,activeCategory }) => {
+  const [activeCategoryChosen, setActiveCategoryChosen] = useState<string>('all');
   const [images, setImages] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [corousalImgIndex, setCorousalImgIndex] = useState(0);
@@ -24,9 +25,18 @@ const ModalGallery: React.FC<ModalProps> = ({ isOpen, onClose, allbum }) => {
   };
 
   useEffect(() => {
-    setActiveCategory('all');
-    setImages(allbum?.all);
-  }, [isOpen]);
+    setActiveCategoryChosen(activeCategory);
+  }, [isOpen,activeCategory]);
+
+  useEffect(()=>{
+    if(activeCategoryChosen === 'all'){
+      setImages(allbum?.all);
+    }else if(activeCategoryChosen === 'stays'){
+      setImages(allbum?.stays);
+    }else if(activeCategoryChosen === 'activities'){
+      setImages(allbum?.activities);
+    }
+  },[activeCategoryChosen])
 
   if (!isOpen) return null;
 
@@ -53,11 +63,11 @@ const ModalGallery: React.FC<ModalProps> = ({ isOpen, onClose, allbum }) => {
           <h2
             className={styles.modalTitle}
             style={{
-              color: activeCategory === 'all' ? '#000' : '#888',
+              color: activeCategoryChosen === 'all' ? '#000' : '#888',
               cursor: 'pointer',
             }}
             onClick={() => {
-              setActiveCategory('all');
+              setActiveCategoryChosen('all');
               setImages(allbum?.all);
             }}
           >
@@ -68,14 +78,14 @@ const ModalGallery: React.FC<ModalProps> = ({ isOpen, onClose, allbum }) => {
               <h2
                 className={styles.modalTitle}
                 style={{
-                  color: activeCategory === categorykey ? '#000' : '#888',
+                  color: activeCategoryChosen === categorykey.toLowerCase() ? '#000' : '#888',
                   cursor: 'pointer',
                 }}
                 onClick={() => {
-                  setActiveCategory(categorykey.toLowerCase());
-                  if (categorykey === 'Stays') {
+                  setActiveCategoryChosen(categorykey.toLowerCase());
+                  if (categorykey.toLowerCase() === 'stays') {
                     setImages(allbum?.stays);
-                  } else if (categorykey === 'Activities') {
+                  } else if (categorykey.toLowerCase() === 'activities') {
                     setImages(allbum?.activities);
                   } else {
                     setImages(allbum?.all);
@@ -83,9 +93,9 @@ const ModalGallery: React.FC<ModalProps> = ({ isOpen, onClose, allbum }) => {
                 }}
               >
                 {categorykey}{' '}
-                {categorykey === 'Stays'
+                {categorykey.toLowerCase() === 'stays'
                   ? `(${allbum?.stays.length})`
-                  : categorykey === 'Activities'
+                  : categorykey.toLowerCase() === 'activities'
                   ? `(${allbum?.activities.length})`
                   : `(${allbum?.all.length})`}
               </h2>
@@ -113,13 +123,7 @@ const ModalGallery: React.FC<ModalProps> = ({ isOpen, onClose, allbum }) => {
         </div>
       </div>
       <FullScreenCarousel
-        images={
-          activeCategory === 'stays'
-            ? allbum?.stays
-            : activeCategory === 'activities'
-            ? allbum?.activities
-            : allbum?.all
-        }
+        images={images}
         imgIndex={corousalImgIndex}
         isOpen={isModalOpen}
         onClose={closeModal}

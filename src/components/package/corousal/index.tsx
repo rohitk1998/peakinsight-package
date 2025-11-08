@@ -18,9 +18,21 @@ const FullScreenCarousel: React.FC<ModalProps> = ({
   const [currentIndex, setCurrentIndex] = useState(imgIndex);
   const [imagesList, setImagesList] = useState([]);
 
+
+  console.log('imagesList', imagesList);
+  console.log('images', images,imgIndex);
+
+ useEffect(()=> {
+  setCurrentIndex(0)
+  setImagesList([])
+ },[])
+
   useEffect(() => {
     setImagesList(images);
-  }, []);
+    setCurrentIndex(imgIndex)
+  }, [images,imgIndex]);
+
+
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex: number) =>
@@ -41,6 +53,8 @@ const FullScreenCarousel: React.FC<ModalProps> = ({
   };
 
   if (!isOpen) return null;
+
+  if(currentIndex === 0 ) return <p>Loading...</p>
 
   return (
     <div

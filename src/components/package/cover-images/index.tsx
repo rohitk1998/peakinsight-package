@@ -29,9 +29,9 @@ const CoverImages: React.FC<{ imagesByCategory: any }> = ({
   imagesByCategory,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('');
 
-  const openModal = (category: string) => {
-    console.log('category', category);
+  const openModal = () => {
     setIsModalOpen(true);
   };
 
@@ -47,23 +47,27 @@ const CoverImages: React.FC<{ imagesByCategory: any }> = ({
             title={''}
             imageUrl={imagesByCategory?.all[0]}
             className={styles.largeImage}
-            onClick={() => openModal('All Images')}
+            onClick={() => {
+              setActiveCategory('all')
+              openModal()}}
           />
 
           <div className={styles.smallGrid}>
             {[
-              imagesByCategory?.stays[0],
-              imagesByCategory?.stays[1],
-              imagesByCategory?.activities[0],
-              imagesByCategory?.activities[2],
+              {img: imagesByCategory?.stays[0] , name : 'stays'},
+              {img: imagesByCategory?.stays[1] , name : 'stays'},
+              {img: imagesByCategory?.activities[0] , name : 'activities'},
+              {img: imagesByCategory?.activities[2] , name : 'activities'},
             ]
               .map((category, index) => (
                 <ImageCard
                   key={index}
                   title={''}
-                  imageUrl={category}
+                  imageUrl={category?.img}
                   className={styles.smallImage}
-                  onClick={() => openModal('Activities')}
+                  onClick={() => {
+                    setActiveCategory(category?.name)
+                    openModal()}}
                 />
               ))}
 
@@ -71,9 +75,10 @@ const CoverImages: React.FC<{ imagesByCategory: any }> = ({
               <button
                 className={styles.viewAllButton}
                 onClick={() =>
-                  openModal(
-                    `All Images (${[...imagesByCategory?.all].length || 0})`
-                  )
+                  {
+                    setActiveCategory('all')
+                    openModal()
+                  }
                 }
               >
                 <svg
@@ -100,6 +105,7 @@ const CoverImages: React.FC<{ imagesByCategory: any }> = ({
         isOpen={isModalOpen}
         onClose={closeModal}
         allbum={imagesByCategory}
+        activeCategory={activeCategory}
       />
     </section>
   );

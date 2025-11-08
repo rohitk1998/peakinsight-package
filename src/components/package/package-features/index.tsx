@@ -10,14 +10,24 @@ const PackageFeatures = ({ packageDetails }: PackageFeaturesProps) => {
   return (
     <div className={styles.packageContainer}>
       <div className={styles.locationInfo}>
-        <h1 className={styles.title}>{packageDetails?.packageName}</h1>
+        <h1 className={styles.title}>{packageDetails?.title}</h1>
       </div>
       <div className={styles.packageInfo}>
         <div className={`${styles.tripDaysInfo}`}>
-          {packageDetails?.noOfDays} d / {packageDetails?.noOfNights} n
+          {packageDetails?.duration}
         </div>
-         <div className={`${styles.packageType}`}>
-          {packageDetails?.packageType}
+        <div className={styles.routeBreakdown}>
+          {packageDetails?.routeBreakdown.map((route: any) => (
+            <div className={styles.routeContainer}>
+              <span className={styles.routeDays}>
+              {route.days} 
+              </span>
+              <div className={styles.des}>
+              <span>{ route?.days > 1 ? 'days' : 'day' } in </span>
+              <span className={styles.location}>{route.location}</span>
+              </div>
+            </div>
+          ))}
         </div>
          <div className={`${styles.stayCategory}`}>
           {packageDetails?.stayCategory}
@@ -25,9 +35,11 @@ const PackageFeatures = ({ packageDetails }: PackageFeaturesProps) => {
       </div>
       <hr className={styles.divider} />
       <div className={styles.features}>
-        {packageDetails?.inclusions?.map((feature: any) => (
+        {packageDetails?.included?.map((feature: any) => (
           <div className={styles.feature}>
-            {icons[feature]}
+            <div className={styles.featureIcon}>
+            {icons[feature.split(' ')[0]]}
+            </div>
             <span>{feature}</span>
           </div>
         ))}
@@ -39,10 +51,10 @@ const PackageFeatures = ({ packageDetails }: PackageFeaturesProps) => {
         </label>
       </div>
       <div className={styles.featuresDestinations}>
-        {packageDetails?.destinations?.map((feature: any, index: number) => (
+        {packageDetails?.destinationRoute?.map((feature: any, index: number) => (
           <div className={styles.featureDestination}>
             <p>{feature}</p>
-            {index !== packageDetails?.destinations?.length - 1 && (
+            {index !== packageDetails?.destinationRoute?.length - 1 && (
               <svg
                 className={styles.arrow}
                 width="20"

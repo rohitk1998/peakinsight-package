@@ -13,8 +13,6 @@ const Package = () => {
     userId: string;
   }>();
   const [packageDetails, setPackageDetails] = useState<any>(null);
-  const [destinations, setDestinations] = useState<any[]>([]);
-  const [activities, setActivities] = useState<any[]>([]);
   const [imagesByCategory,setImagesByCategory]=useState<any>({
     all : [] , 
     stays:[],

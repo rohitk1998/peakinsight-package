@@ -1,16 +1,16 @@
 @use "../../../styles/variables.scss" as *;
 
 .packageContainer {
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     background: white;
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: start;
-    padding: 1rem;
     overflow: hidden;
     border-radius: 10px;
+    padding: 1rem;
 }
 
 .packageInfo {
@@ -18,8 +18,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: start;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+    
 
     div{
         color: #090909;
@@ -32,9 +31,50 @@
     }
 }
 
+.routeBreakdown{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top:5px;
+    margin-left: 2rem;
+    gap: 1rem;
+    @media (max-width: 830px) {
+        margin-left: 0rem;
+    }
+    .routeContainer{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        gap: 0.5rem;
+    }
+    .routeDays{
+        font-size: 35px;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        text-align: center;
+        color: #c8c6c6d4;
+    }
+    .des{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        font-size: 13px;
+        font-weight: 400;
+        margin-bottom: 0.5rem;
+        text-align: center;
+        color: #000000;
+        .location{
+            font-weight: 700;
+        }
+    }
+}
+
 .title {
     font-size: 35px;
-    font-weight: 400;
+    font-weight: 600;
     margin-bottom: 0.5rem;
     text-align: center;
     color: #000000;
@@ -50,12 +90,12 @@
     display: inline-flex;
     align-items: start;
     justify-content: start;
-     padding: 0.2rem 1rem;
-    background: #d1936d;
+    padding: 0.5rem 0rem;
+    background: #ffffff00;
     border-radius: 2rem;
-    font-size: 14px;
-    font-weight: 400;
-    color: #ffffff !important;
+    font-size: 30px;
+    font-weight: 700;
+    color: #d7d6d7 !important;
     text-decoration: none;
 }
 
@@ -63,13 +103,17 @@
     display: inline-flex;
     align-items: start;
     justify-content: start;
-    padding: 0.2rem 1rem;
-    border:1px solid #eba103;
+    padding: 0.5rem 2rem;
+    background-color:#f97502;
     border-radius: 2rem;
     font-size: 14px;
-    font-weight: 400;
-    color: #cc6803 !important;
+    font-weight: 500;
+    color: #edecec !important;
     text-decoration: none;
+    margin-left: 2rem;
+    @media (max-width: 830px) {
+        margin-left: 0rem;
+    }
 }
 
 
@@ -92,6 +136,13 @@
     justify-content: center;
     gap: 0.6rem;
     padding: 1rem 0;
+    .featureIcon{
+        color: #a9a9a9;
+        margin-top: 5px;
+    }
+    span{
+        color: #191919  ;
+    }
 }
 
 .featuresDestinations {
