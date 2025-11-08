@@ -1,5 +1,5 @@
 .itineraryContainer {
-    width: "100%";
+    width: 100%;
     min-width: 320px;
     margin: 0 auto;
 
@@ -71,6 +71,7 @@
     }
 
     .tab-content {
+        width:100%;
         background: white;
         border-radius: 1rem;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './itinerary-details.module.scss';
 // import {
 //   ArrowLeftIcon,
@@ -8,6 +8,7 @@ import styles from './itinerary-details.module.scss';
 //   Clock,
 // } from 'lucide-react';
 // import ActivityDetail from '../activitydetail';
+import CarouselResponsive from "../carousal-respnsive/index";
 
 interface ItineraryProps {
   packageDetail: any ; 
@@ -20,7 +21,7 @@ const ItineraryDetails: React.FC<ItineraryProps> = ({ packageDetail }) => {
 
   return (
     <div className={styles.Container}>
-       Hello
+      <CarouselResponsive  images={packageDetail?.days[0]?.images} />
     </div>
   );
 };
