@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import styles from './itinerary.module.scss';
 import ItineraryDetails from './itinerary-details';
+import SummarizedView from '../summarized-view';
+import ActivityDetail from '../activitydetail';
+import StayAccordion from '../stay';
 
 const tabs = [
   {
@@ -64,6 +67,9 @@ const Itinerary: React.FC<ItineraryProps> = ({ packageDetail }) => {
         </div>
         <div className={styles.tabContent}>
         {activetab === 1 && <ItineraryDetails packageDetail={packageDetail} />}
+        {activetab === 2 && <SummarizedView packageDetail={packageDetail} />}
+        {activetab === 3 && <ActivityDetail items={packageDetail?.days} />}
+        {activetab === 4 && <StayAccordion />}
         </div>
       </div>
     </div>

@@ -1,7 +1,6 @@
 .accordion {
     width: 100%;
     padding: 20px;
-    margin-bottom: 20px;
     overflow: hidden;
     
     .accordion-item {
@@ -39,6 +38,12 @@
         .rotate {
           transform: rotate(180deg);
         }
+
+        .accordion-heading{
+          display: flex;
+          flex-direction: row;
+          justify-content: start;
+        }
       }
   
       .accordion-content {
@@ -48,6 +53,10 @@
         padding: 0 1rem;
         background-color: white;
         color: black;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: start;  
   
         &.open {
           max-height: 1000px;
