@@ -1,19 +1,15 @@
 .itineraryContainer {
     width: 100%;
     min-width: 320px;
-    margin: 0 auto;
+    max-width: 800px;
 
     .itineraryContent {
         width: 100%;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-        justify-content: start;
         padding: 1rem;
     }
 
     .tabs {
+        width: 100%;
         display: flex;
         gap: 1.5rem;
         margin-top: 2rem;

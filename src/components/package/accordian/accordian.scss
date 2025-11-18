@@ -1,69 +1,75 @@
 .accordion {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1rem;
-    overflow: hidden;
-    transition: box-shadow 0.3s ease;
-  
+  background: #f3f3f3; /* cream background */
+  border-radius: 6px;
+  border: 1.5px solid #d0cfcf; /* bold orange border */
+  margin-bottom: 1rem;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  outline: none !important;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  &:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  &__header {
+    width: 100%;
+    padding: 1.25rem 1.5rem;
+    background: #f3f3f3; /* same cream background for header */
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+
     &:hover {
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    }
-  
-    &__header {
-      width: 100%;
-      padding: 1.25rem 1.5rem;
-      background: white;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: background-color 0.3s ease;
-      font-size: 1rem;
-  
-      &:hover {
-        background-color: #f8f9fa;
-      }
-    }
-  
-    &__title {
-      font-weight: 600;
-      color: #333;
-      font-size: 1.1rem;
-    }
-  
-    &__icon {
-      width: 20px;
-      height: 20px;
-      transition: transform 0.3s ease;
-      color: #666;
-  
-      svg {
-        width: 100%;
-        height: 100%;
-      }
-    }
-  
-    &__content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-      background-color: #f8f9fa;
-      border-top: 1px solid #e9ecef;
-    }
-  
-    &__body {
-      padding: 1.5rem;
-    }
-  
-    &--active {
-      .accordion__icon {
-        transform: rotate(180deg);
-      }
-  
-      .accordion__content {
-        max-height: 500px;
-      }
+      background-color: #fff3d4; /* slightly deeper cream on hover */
     }
   }
+
+  &__title {
+    font-weight: 600;
+    color: #333;
+    font-size: 1.1rem;
+  }
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+    color: #6c6c6c; /* orange icon color for consistency */
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background-color: #fffdf5; /* slightly lighter cream for content */
+    border-top: 1px solid #ffe0b3; /* soft divider line */
+  }
+
+  &__body {
+    padding: 1.5rem;
+  }
+
+  &--active {
+    .accordion__icon {
+      transform: rotate(180deg);
+    }
+
+    .accordion__content {
+      max-height: 500px;
+    }
+  }
+}
