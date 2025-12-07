@@ -12,6 +12,7 @@ interface ItineraryProps {
 
 const ItineraryDetail = ({ day, packageDetail }: { day: any, packageDetail: any }) => {
 
+  console.log("day", packageDetail)
   return (
     <div key={day?.id} className={styles.itineraryContent}>
       {

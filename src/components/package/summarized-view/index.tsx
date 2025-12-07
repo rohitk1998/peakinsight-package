@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Car, Hotel, Utensils, Calendar, Activity as ActivityIcon } from 'lucide-react';
+import { MapPin, Car, Hotel, Utensils, Activity as ActivityIcon } from 'lucide-react';
 import './TripSummary.scss';
 
 interface Activity {
