@@ -1,0 +1,240 @@
+// Transfer component styles
+$color-primary: #ea580c;
+$color-blue: #2563eb;
+$color-text-dark: #111827;
+$color-text-medium: #6b7280;
+$color-border: #e5e7eb;
+$color-bg-light: #f9fafb;
+$color-white: white;
+
+.transfer-accordion {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.no-transfers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+
+  p {
+    color: $color-text-medium;
+    font-size: 16px;
+    margin: 0;
+  }
+}
+
+.accordion-item {
+  background: $color-white;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  // overflow: hidden; // Removed to fix visibility issue
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: $color-bg-light;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .day-badge {
+      background: $color-primary;
+      color: $color-white;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .day-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: $color-text-dark;
+    }
+  }
+
+  .chevron {
+    transition: transform 0.3s ease;
+    color: $color-text-medium;
+
+    &.rotated {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.accordion-content {
+  padding: 0 24px 24px;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.transfer-item {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: $color-bg-light;
+  border-radius: 8px;
+
+  .transfer-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: $color-white;
+    border-radius: 8px;
+    flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    .vehicle-icon {
+      color: $color-blue;
+    }
+  }
+
+  .transfer-details {
+    flex: 1;
+
+    .transfer-route {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+
+      .transfer-type {
+        font-size: 14px;
+        color: $color-text-medium;
+        font-weight: 500;
+      }
+
+      .transfer-location {
+        font-size: 16px;
+        font-weight: 600;
+        color: $color-text-dark;
+      }
+
+      .arrow-icon {
+        color: $color-text-medium;
+        flex-shrink: 0;
+      }
+    }
+
+    .transfer-vehicle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 14px;
+
+      .vehicle-label {
+        color: $color-text-medium;
+        font-weight: 500;
+      }
+
+      .vehicle-name {
+        color: $color-text-dark;
+        font-weight: 600;
+      }
+    }
+
+    .transfer-stops {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 14px;
+
+      .stops-label {
+        color: $color-text-medium;
+        font-weight: 500;
+        flex-shrink: 0;
+      }
+
+      .stops-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+
+        .stop-item {
+          color: $color-text-dark;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+// Media Query for mobile styles
+@media (max-width: 640px) {
+  .accordion-header {
+    padding: 16px;
+
+    .header-content {
+      gap: 12px;
+
+      .day-badge {
+        font-size: 12px;
+        padding: 4px 10px;
+      }
+
+      .day-title {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .accordion-content {
+    // min-height: 500px; // Removed unnecessary fixed height
+    padding: 0 16px 16px;
+  }
+
+  .transfer-item {
+    padding: 16px;
+    gap: 12px;
+
+    .transfer-icon {
+      width: 36px;
+      height: 36px;
+    }
+
+    .transfer-details {
+      .transfer-route {
+        .transfer-location {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}

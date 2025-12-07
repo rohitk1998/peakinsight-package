@@ -4,36 +4,37 @@ import ItineraryDetails from './itinerary-details';
 import SummarizedView from '../summarized-view';
 import ActivityDetail from '../activitydetail';
 import Stay from '../stay';
+import TransferGrid from '../transfer/TransferGrid';
 
 const tabs = [
   {
-    id : 1 , 
-    name:'Itinerary'
+    id: 1,
+    name: 'Itinerary'
   },
   {
-    id : 2 , 
-    name:'Summarised View'
+    id: 2,
+    name: 'Summarised View'
   },
   {
-    id : 3 , 
-    name:'Activities'
+    id: 3,
+    name: 'Activities'
   },
   {
-    id : 4 , 
-    name:'Stay'
+    id: 4,
+    name: 'Stay'
   },
   {
-    id : 5 , 
-    name:'Transfers'
+    id: 5,
+    name: 'Transfers'
   }
 ]
 
 interface ItineraryProps {
-  packageDetail: any; 
+  packageDetail: any;
 }
 
 const Itinerary: React.FC<ItineraryProps> = ({ packageDetail }) => {
-  const [activetab, setActiveTab] = useState(1); 
+  const [activetab, setActiveTab] = useState(1);
 
   if (!packageDetail || packageDetail?.days?.length === 0) {
     return (
@@ -56,9 +57,8 @@ const Itinerary: React.FC<ItineraryProps> = ({ packageDetail }) => {
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              className={`${styles.tab} ${
-                activetab === tab.id ? styles.active : ''
-              }`}
+              className={`${styles.tab} ${activetab === tab.id ? styles.active : ''
+                }`}
               onClick={() => setActiveTab(tab.id)}
             >
               <span className={styles.dayNumber}>{tab.name}</span>
@@ -66,10 +66,11 @@ const Itinerary: React.FC<ItineraryProps> = ({ packageDetail }) => {
           ))}
         </div>
         <div className={styles.tabContent}>
-        {activetab === 1 && <ItineraryDetails packageDetail={packageDetail} />}
-        {activetab === 2 && <SummarizedView packageDetail={packageDetail} />}
-        {activetab === 3 && <ActivityDetail items={packageDetail?.days} />}
-        {activetab === 4 && <Stay packageDetail={packageDetail} />}
+          {activetab === 1 && <ItineraryDetails packageDetail={packageDetail} />}
+          {activetab === 2 && <SummarizedView packageDetail={packageDetail} />}
+          {activetab === 3 && <ActivityDetail items={packageDetail?.days} />}
+          {activetab === 4 && <Stay days={packageDetail?.days} />}
+          {activetab === 5 && <TransferGrid days={packageDetail?.days} />}
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import CoverImages from './cover-images';
 import { useParams } from 'react-router-dom';
 import PackageDescription from './package-features';
 import Itinerary from './itinerary';
+import PackageSkeleton from './PackageSkeleton';
 import data from "../../data.json"
 
 const Package = () => {
@@ -13,10 +14,11 @@ const Package = () => {
     userId: string;
   }>();
   const [packageDetails, setPackageDetails] = useState<any>(null);
-  const [imagesByCategory,setImagesByCategory]=useState<any>({
-    all : [] , 
-    stays:[],
-    activities:[]
+  const [loading, setLoading] = useState(true);
+  const [imagesByCategory, setImagesByCategory] = useState<any>({
+    all: [],
+    stays: [],
+    activities: []
   });
 
 
@@ -38,17 +40,22 @@ const Package = () => {
     // );
 
     const response = {
-      data:data
+      data: data
     };
-    setPackageDetails(response?.data?.body);
+
+    // Simulate network delay
+    setTimeout(() => {
+      setPackageDetails(response?.data?.body);
+      setLoading(false);
+    }, 2000);
   };
 
   const setImageAllbums = (data: any) => {
-        setImagesByCategory({
-          all : [ ...data?.allDayImages  ,...data?.allStayImages ,...data?.allActivityImages ],
-          stays : [ ...data?.allStayImages ],
-          activities : [ ...data?.allActivityImages ]
-        })
+    setImagesByCategory({
+      all: [...data?.allDayImages, ...data?.allStayImages, ...data?.allActivityImages],
+      stays: [...data?.allStayImages],
+      activities: [...data?.allActivityImages]
+    })
   };
 
   useEffect(() => {
@@ -60,6 +67,10 @@ const Package = () => {
       setImageAllbums(packageDetails);
     }
   }, [packageDetails]);
+
+  if (loading) {
+    return <PackageSkeleton />;
+  }
 
   return (
     <div>

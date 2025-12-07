@@ -1,85 +1,127 @@
 import { useState } from 'react';
 import './index.scss';
+import FullScreenCarousel from '../corousal';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-const CarouselResponsive = ({ images }: { images: any }) => {
+interface CarouselProps {
+  images: string[];
+  dayNumber?: number;
+  title?: string;
+}
+
+const CarouselResponsive = ({ images, dayNumber, title }: CarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const goToPrevious = () => {
+  if (!images || images.length === 0) return null;
+
+  const showControls = images.length > 1;
+
+  const goToPrevious = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
   };
 
-  const goToNext = () => {
+  const goToNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setCurrentIndex((prevIndex) =>
       prevIndex === images.length - 1 ? 0 : prevIndex + 1
     );
   };
 
-  const goToSlide = (index: any) => {
+  const goToSlide = (index: number, e: React.MouseEvent) => {
+    e.stopPropagation();
     setCurrentIndex(index);
   };
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
   return (
-    <div className="carousel-container">
-      <div className="carousel">
-        <div
-          className="carousel-inner"
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-        >
-          {images.map((slide: any) => (
-            <div key={slide} className="carousel-slide">
-              <div className="slide-content">
-                <img src={slide} alt="" />
+    <>
+      <div className="carousel-container" >
+        <div className="carousel">
+          <div
+            className="carousel-inner"
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          >
+            {images.map((slide: string, index: number) => (
+              <div key={`${slide}-${index}`} className="carousel-slide">
+                <div className="slide-content">
+                  <img src={slide} alt={`Slide ${index + 1}`} />
+                </div>
               </div>
+            ))}
+          </div>
+
+          {/* Day Info Overlay (Bottom Left) */}
+          {dayNumber && (
+            <div className="day-info-overlay">
+              <span className="day-number">Day {dayNumber}</span>
+              {title && <span className="day-title">{title}</span>}
             </div>
-          ))}
-        </div>
+          )}
 
-        <button
-          className="carousel-button prev-button"
-          onClick={goToPrevious}
-          aria-label="Previous slide"
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M15 18L9 12L15 6"
-              stroke="black"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
+          {/* Stories View (Bottom Right) */}
+          {images.length > 1 && (
+            <div className="stories-container">
+              {images.slice(0, 3).map((img, idx) => (
+                <div key={idx} className="story-thumbnail" onClick={(e) => {
+                  e.stopPropagation();
+                  openModal();
+                }}>
+                  <img src={img} alt={`Story ${idx + 1}`} />
+                  {idx === 2 && images.length > 3 && (
+                    <div className="more-overlay">+{images.length - 3}</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
 
-        <button
-          className="carousel-button next-button"
-          onClick={goToNext}
-          aria-label="Next slide"
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M9 18L15 12L9 6"
-              stroke="black"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
+          {showControls && (
+            <>
+              <button
+                className="carousel-button prev-button"
+                onClick={goToPrevious}
+                aria-label="Previous slide"
+              >
+                <ChevronLeft size={24} />
+              </button>
 
-        <div className="carousel-indicators">
-          {images.map((_:any, index:number) => (
-            <button
-              key={index}
-              className={`indicator ${index === currentIndex ? 'active' : ''}`}
-              onClick={() => goToSlide(index)}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
+              <button
+                className="carousel-button next-button"
+                onClick={goToNext}
+                aria-label="Next slide"
+              >
+                <ChevronRight size={24} />
+              </button>
+
+              <div className="carousel-indicators">
+                {images.map((_: string, index: number) => (
+                  <button
+                    key={index}
+                    className={`indicator ${index === currentIndex ? 'active' : ''}`}
+                    onClick={(e) => goToSlide(index, e)}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
-    </div>
+
+      <FullScreenCarousel
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        images={images}
+        imgIndex={currentIndex}
+      />
+    </>
   );
 };
 

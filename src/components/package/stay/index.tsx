@@ -1,35 +1,126 @@
-import React, { useState } from 'react';
-import { ChevronDown, ImageIcon, Coffee, UtensilsCrossed, Moon } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ChevronDown, ImageIcon, Coffee, UtensilsCrossed, Moon, Star, MapPin, Clock } from 'lucide-react';
 import "./index.scss"
 
-
-interface StayProps{
-  packageDetail:any;
+interface StayProps {
+  days: any;
+  expandedView?: boolean;
 }
 
-const Stay:React.FC<StayProps> = (
-  {
-    packageDetail
-  }
-) => {
-  const [openDay, setOpenDay] = useState(0);
+const Stay: React.FC<StayProps> = ({ days, expandedView = false }) => {
+  // Find the first index that has a stay
+  const getInitialOpenIndex = () => {
+    if (!days || days.length === 0) return -1;
+    const firstStayIndex = days.findIndex((day: any) => day?.stay !== null);
+    return firstStayIndex >= 0 ? firstStayIndex : -1;
+  };
 
-  const toggleDay = (dayIndex:any) => {
+  const [openDay, setOpenDay] = useState(getInitialOpenIndex);
+
+  // Update openDay when days prop changes
+  useEffect(() => {
+    if (!days || days.length === 0) return;
+    const firstStayIndex = days.findIndex((day: any) => day?.stay !== null);
+    if (firstStayIndex >= 0) {
+      setOpenDay(firstStayIndex);
+    }
+  }, [days]);
+
+  const toggleDay = (dayIndex: any) => {
     setOpenDay(openDay === dayIndex ? -1 : dayIndex);
   };
 
-  const renderStars = (rating:any) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <span key={i} className={i < Number(rating) ? 'star filled' : 'star'}>★</span>
-    ));
-  };
+  const renderStayContent = (stay: any) => (
+    <div className="stay-inner-content">
+      {/* Hero Image Section */}
+      <div className="stay-hero-section">
+        {stay.images && stay.images.length > 0 ? (
+          <img src={stay.images[0]} alt={stay.name} />
+        ) : (
+          <div className="placeholder-image" />
+        )}
+        <div className="hero-overlay"></div>
+
+        <button className="gallery-btn">
+          <ImageIcon size={16} />
+          View Gallery
+        </button>
+
+        {stay.starRating && (
+          <div className="rating-badge">
+            <Star className="star" fill="currentColor" size={16} />
+            <span>{stay.starRating} / 5</span>
+          </div>
+        )}
+      </div>
+
+      {/* Details Section */}
+      <div className="stay-details-section">
+        <div className="stay-header-row">
+          <div className="hotel-info">
+            <h3>{stay.name}</h3>
+            <div className="stay-subtitle">
+              <MapPin size={14} />
+              <span>Premium Stay</span>
+              <span className="separator"></span>
+              <Clock size={14} />
+              <span>Check-in: 12:00 PM</span>
+            </div>
+          </div>
+          <div className="check-in-badge">
+            Confirmed Booking
+          </div>
+        </div>
+
+        {/* Features & Inclusions */}
+        <div className="features-grid">
+          {stay.mealPlan && (
+            <div className="feature-chip info">
+              <span>Meal Plan: {stay.mealPlan}</span>
+            </div>
+          )}
+
+          <div className={`feature-chip ${!stay.mealPlan ? 'included' : ''}`}>
+            <Coffee size={16} />
+            <span>Breakfast {!stay.mealPlan ? 'Included' : ''}</span>
+          </div>
+
+          <div className={`feature-chip ${stay.mealPlan ? 'included' : ''}`}>
+            <UtensilsCrossed size={16} />
+            <span>Lunch {stay.mealPlan ? 'Included' : ''}</span>
+          </div>
+
+          <div className={`feature-chip ${stay.mealPlan ? 'included' : ''}`}>
+            <Moon size={16} />
+            <span>Dinner {stay.mealPlan ? 'Included' : ''}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  if (expandedView) {
+    return (
+      <div className="stay-expanded-view">
+        {days?.map((item: any, index: number) => {
+          if (!item.stay) return null;
+          return (
+            <div key={index} className="stay-item-expanded">
+              {renderStayContent(item.stay)}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
 
   return (
     <div className="stay-accordion">
-      {packageDetail?.days?.map((item: any, index:number) => {
+      {days?.map((item: any, index: number) => {
         if (!item.stay) return null;
 
         const isOpen = openDay === index;
+        const stay = item.stay;
 
         return (
           <div key={index} className={`accordion-item ${isOpen ? 'open' : ''}`}>
@@ -40,68 +131,10 @@ const Stay:React.FC<StayProps> = (
               </div>
               <ChevronDown className={`chevron ${isOpen ? 'rotated' : ''}`} />
             </div>
+
             {isOpen && (
               <div className="accordion-content">
-                <div className="stay-header">
-                  <div className="stay-icon">🏨</div>
-                  <h4>Stay At</h4>
-                </div>
-                <h3 className="hotel-name">Check-In At {item.stay.name}</h3>
-                <div className="hotels-grid">
-                 {item.stay.images ? (
-                    <div className="hotel-card single">
-                      <div className="hotel-image">
-                        <img src={item.stay.images[0]} alt={item.stay.name} />
-                        <button className="gallery-btn">
-                          <ImageIcon size={16} />
-                          Gallery
-                        </button>
-                        {item.stay.starRating && (
-                          <div className="rating-badge">
-                            {renderStars(item?.stay?.starRating)}
-                            {item.stay.starRating}/5
-                          </div>
-                        )}
-                      </div>
-                      <h5 className="hotel-title">{item.stay.name}</h5>
-                      {item.stay.mealPlan && (
-                        <p className="meal-plan">Meal Plan: {item.stay.mealPlan}</p>
-                      )}
-                    </div>
-                  ) : null}
-                </div>
-                <div className="inclusions">
-                  <h5>Inclusions:</h5>
-                  <div className="inclusion-items">
-                    <div className={`inclusion-item ${!item.stay.mealPlan ? 'included' : 'not-included'}`}>
-                      <Coffee size={20} />
-                      <div>
-                        <span className="inclusion-name">Breakfast</span>
-                        <span className="inclusion-status">
-                          {!item.stay.mealPlan ? '✓ Included' : 'Not Included'}
-                        </span>
-                      </div>
-                    </div>
-                    <div className={`inclusion-item ${item.stay.mealPlan ? 'included' : 'not-included'}`}>
-                      <UtensilsCrossed size={20} />
-                      <div>
-                        <span className="inclusion-name">Lunch</span>
-                        <span className="inclusion-status">
-                          {item.stay.mealPlan ? '✓ Included' : 'Not Included'}
-                        </span>
-                      </div>
-                    </div>
-                    <div className={`inclusion-item ${item.stay.mealPlan ? 'included' : 'not-included'}`}>
-                      <Moon size={20} />
-                      <div>
-                        <span className="inclusion-name">Dinner</span>
-                        <span className="inclusion-status">
-                          {item.stay.mealPlan ? '✓ Included' : 'Not Included'}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                {renderStayContent(stay)}
               </div>
             )}
           </div>

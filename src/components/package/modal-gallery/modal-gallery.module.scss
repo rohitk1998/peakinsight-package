@@ -1,23 +1,26 @@
-// Modal styles
 .modalOverlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(255, 255, 255, 0.8);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
     padding: $spacing-md;
+
+    @media (max-width: 768px) {
+        align-items: start;
+        justify-content: center;
+        margin-top: 50px;
+    }
 }
 
 .modalContent {
     background-color: white;
     width: 100%;
     height: 100%;
-    max-width: 100vw;
     max-height: 100vh;
     border-radius: $border-radius-lg;
     overflow: hidden;
@@ -30,7 +33,7 @@
         max-width: 100%;
         max-height: 100%;
         height: 100vh;
-        width: 100vw;
+        width: 90%;
     }
 }
 
@@ -181,6 +184,20 @@
     border-radius: $border-radius-md;
     cursor: pointer;
     transition: transform $transition-normal;
+
+    .modalImageSkelton {
+        max-height: 320px !important;
+        min-height: 320px !important;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    @media (max-width: 600px) {
+        .modalImageSkelton {
+            max-height: 200px;
+            min-height: 200px;
+        }
+    }
 
 }
 
