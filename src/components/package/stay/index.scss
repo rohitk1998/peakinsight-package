@@ -1,0 +1,277 @@
+// _stay-accordion.scss
+
+// Define common variables for colors and spacing
+$color-primary: #ea580c;
+$color-blue: #2563eb;
+$color-green: #059669;
+$color-text-dark: #111827;
+$color-text-medium: #6b7280;
+$color-border: #e5e7eb;
+$color-bg-light: #f9fafb;
+$color-bg-blue-light: #f0f9ff;
+$color-white: white;
+$color-star-filled: #fbbf24;
+$color-star-empty: #d1d5db;
+$color-text-light-grey: #9ca3af;
+
+.stay-accordion {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.accordion-item {
+  background: $color-white;
+  border: 1px solid $color-border;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: $color-bg-light;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .day-badge {
+      background: $color-primary;
+      color: $color-white;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .day-title {
+      margin: 0;
+      font-size: 16px !important;
+      font-weight: 400 !important;
+      color: $color-text-dark;
+    }
+  }
+
+  .chevron {
+    transition: transform 0.3s ease;
+    color: $color-text-medium;
+
+    &.rotated {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.accordion-content {
+  padding: 0; // Removed padding to allow full-width image
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Premium Inner Content Styles
+.stay-inner-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stay-hero-section {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  &:hover img {
+    transform: scale(1.05);
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4));
+    pointer-events: none;
+  }
+
+  .gallery-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    color: $color-text-dark;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background: $color-white;
+      transform: translateY(-2px);
+    }
+  }
+
+  .rating-badge {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: $color-text-dark;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    .star {
+      color: $color-star-filled;
+      font-size: 16px;
+    }
+  }
+}
+
+.stay-details-section {
+  padding: 24px;
+  background: $color-white;
+
+  .stay-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+
+    .hotel-info {
+      h3 {
+        font-size: 24px;
+        font-weight: 700;
+        color: $color-text-dark;
+        margin: 0 0 8px 0;
+        letter-spacing: -0.5px;
+      }
+
+      .stay-subtitle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: $color-text-medium;
+        font-size: 14px;
+        font-weight: 500;
+
+        .separator {
+          width: 4px;
+          height: 4px;
+          background: $color-border;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    .check-in-badge {
+      background: $color-bg-blue-light;
+      color: $color-blue;
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  .features-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid $color-border;
+
+    .feature-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s;
+
+      &.included {
+        background: rgba($color-green, 0.1);
+        color: $color-green;
+        border: 1px solid rgba($color-green, 0.2);
+      }
+
+      &.info {
+        background: $color-bg-light;
+        color: $color-text-dark;
+        border: 1px solid $color-border;
+      }
+    }
+  }
+}
+
+// Media Query for mobile styles
+@media (max-width: 640px) {
+  .stay-hero-section {
+    height: 220px;
+  }
+
+  .stay-details-section {
+    padding: 20px;
+
+    .stay-header-row {
+      flex-direction: column;
+      gap: 16px;
+
+      .hotel-info h3 {
+        font-size: 20px;
+      }
+    }
+  }
+}

@@ -49,15 +49,16 @@ const CoverImages: React.FC<{ imagesByCategory: any }> = ({
             className={styles.largeImage}
             onClick={() => {
               setActiveCategory('all')
-              openModal()}}
+              openModal()
+            }}
           />
 
           <div className={styles.smallGrid}>
             {[
-              {img: imagesByCategory?.stays[0] , name : 'stays'},
-              {img: imagesByCategory?.stays[1] , name : 'stays'},
-              {img: imagesByCategory?.activities[0] , name : 'activities'},
-              {img: imagesByCategory?.activities[2] , name : 'activities'},
+              { img: imagesByCategory?.stays[0], name: 'stays' },
+              { img: imagesByCategory?.stays[1], name: 'stays' },
+              { img: imagesByCategory?.activities[0], name: 'activities' },
+              { img: imagesByCategory?.activities[2], name: 'activities' },
             ]
               .map((category, index) => (
                 <ImageCard
@@ -67,18 +68,18 @@ const CoverImages: React.FC<{ imagesByCategory: any }> = ({
                   className={styles.smallImage}
                   onClick={() => {
                     setActiveCategory(category?.name)
-                    openModal()}}
+                    openModal()
+                  }}
                 />
               ))}
 
             <div className={styles.viewAllCard}>
               <button
                 className={styles.viewAllButton}
-                onClick={() =>
-                  {
-                    setActiveCategory('all')
-                    openModal()
-                  }
+                onClick={() => {
+                  setActiveCategory('all')
+                  openModal()
+                }
                 }
               >
                 <svg

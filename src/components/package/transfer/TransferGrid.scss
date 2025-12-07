@@ -1,0 +1,254 @@
+// TransferGrid component styles
+$color-primary: #ea580c;
+$color-blue: #2563eb;
+$color-text-dark: #111827;
+$color-text-medium: #6b7280;
+$color-border: #e5e7eb;
+$color-bg-light: #f9fafb;
+$color-white: white;
+$color-success: #10b981;
+
+.transfer-grid-container {
+    width: 100%;
+    margin-top: 24px;
+    padding: 0 4px;
+}
+
+.no-transfers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    background: $color-bg-light;
+    border-radius: 16px;
+    border: 1px dashed $color-border;
+
+    p {
+        color: $color-text-medium;
+        font-size: 16px;
+        margin: 0;
+    }
+}
+
+.transfer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+
+    @media (max-width: 1024px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 640px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.transfer-card {
+    position: relative;
+    background: $color-white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba($color-border, 0.6);
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        border-color: rgba($color-primary, 0.3);
+
+        .card-header-bg {
+            opacity: 0.15;
+        }
+    }
+
+    .day-badge {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: $color-primary;
+        color: $color-white;
+        padding: 8px 16px;
+        border-bottom-right-radius: 16px;
+        font-size: 13px;
+        font-weight: 700;
+        z-index: 10;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .verified-badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: $color-primary; // Changed icon color to primary for contrast
+        background: rgba($color-primary, 0.15); // Made background subtle
+        border-bottom-left-radius: 16px;
+        padding: 8px 12px;
+        // width: 28px; // Removed fixed width
+        // height: 28px; // Removed fixed height
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        // box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.1); // Removed shadow for cleaner look
+    }
+
+    .card-header {
+        position: relative;
+        padding: 40px 24px 20px;
+        background: linear-gradient(135deg, rgba($color-primary, 0.03) 0%, rgba($color-white, 0.4) 100%); // Subtle background
+        border-bottom: 1px solid rgba($color-border, 0.5);
+
+        .card-header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient($color-primary 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.08;
+            transition: opacity 0.3s ease;
+        }
+
+        .vehicle-icon-wrapper {
+            position: relative;
+            width: 56px;
+            height: 56px;
+            background: $color-white;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            color: $color-primary;
+
+            svg {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
+        .transfer-title {
+            position: relative;
+            font-size: 18px;
+            font-weight: 700;
+            color: $color-text-dark;
+            margin: 0 0 4px;
+            line-height: 1.3;
+        }
+
+        .transfer-subtitle {
+            position: relative;
+            font-size: 14px;
+            color: $color-text-medium;
+            font-weight: 500;
+        }
+    }
+
+    .card-body {
+        padding: 24px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .route-timeline {
+            position: relative;
+            padding-left: 20px;
+
+            &::before {
+                content: '';
+                position: absolute;
+                left: 7px;
+                top: 8px;
+                bottom: 8px;
+                width: 2px;
+                background: repeating-linear-gradient(to bottom, $color-border 0, $color-border 4px, transparent 4px, transparent 8px);
+            }
+
+            .route-point {
+                position: relative;
+                margin-bottom: 20px;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    left: -20px;
+                    top: 6px;
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 50%;
+                    background: $color-white;
+                    border: 4px solid;
+                    box-sizing: border-box;
+                }
+
+                &.start::after {
+                    border-color: $color-primary;
+                }
+
+                &.end::after {
+                    border-color: $color-blue;
+                }
+
+                .point-label {
+                    display: block;
+                    font-size: 12px;
+                    color: $color-text-medium;
+                    margin-bottom: 2px;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    font-weight: 600;
+                }
+
+                .point-name {
+                    display: block;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: $color-text-dark;
+                }
+            }
+        }
+
+        .stops-section {
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid $color-border;
+
+            .stops-label {
+                display: block;
+                font-size: 12px;
+                color: $color-text-medium;
+                margin-bottom: 8px;
+                font-weight: 600;
+            }
+
+            .stops-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+
+                .stop-tag {
+                    background: $color-bg-light;
+                    color: $color-text-dark;
+                    padding: 4px 10px;
+                    border-radius: 6px;
+                    font-size: 12px;
+                    font-weight: 500;
+                    border: 1px solid $color-border;
+                }
+            }
+        }
+    }
+}

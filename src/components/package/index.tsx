@@ -1,30 +1,31 @@
 import { useEffect, useState } from 'react';
 import CoverImages from './cover-images';
 // import axios from 'axios';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import PackageDescription from './package-features';
 import Itinerary from './itinerary';
+import PackageSkeleton from './PackageSkeleton';
 import data from "../../data.json"
 
 const Package = () => {
-  const { id, agencyId, userId }: any = useParams<{
-    id: string;
-    agencyId: string;
-    userId: string;
-  }>();
+  // const { id, agencyId, userId }: any = useParams<{
+  //   id: string;
+  //   agencyId: string;
+  //   userId: string;
+  // }>();
   const [packageDetails, setPackageDetails] = useState<any>(null);
-  const [imagesByCategory,setImagesByCategory]=useState<any>({
-    all : [] , 
-    stays:[],
-    activities:[]
+  const [loading, setLoading] = useState(true);
+  const [imagesByCategory, setImagesByCategory] = useState<any>({
+    all: [],
+    stays: [],
+    activities: []
   });
 
-  console.log('URL Params:', { id, agencyId, userId });
 
   const searchPackageDetails = async (
-    id: number,
-    agencyId: number,
-    userId: number
+    // id: number,
+    // agencyId: number,
+    // userId: number
   ) => {
     // const response = await axios.post(
     //   'https://crm.peakinsight.in/packages/search/details',
@@ -39,23 +40,27 @@ const Package = () => {
     // );
 
     const response = {
-      data:data
+      data: data
     };
 
-    console.log(response.data, 'response.data');
-    setPackageDetails(response?.data?.body);
+    // Simulate network delay
+    setTimeout(() => {
+      setPackageDetails(response?.data?.body);
+      setLoading(false);
+    }, 2000);
   };
 
   const setImageAllbums = (data: any) => {
-        setImagesByCategory({
-          all : [ ...data?.allDayImages  ,...data?.allStayImages ,...data?.allActivityImages ],
-          stays : [ ...data?.allStayImages ],
-          activities : [ ...data?.allActivityImages ]
-        })
+    setImagesByCategory({
+      all: [...data?.allDayImages, ...data?.allStayImages, ...data?.allActivityImages],
+      stays: [...data?.allStayImages],
+      activities: [...data?.allActivityImages]
+    })
   };
 
   useEffect(() => {
-    searchPackageDetails(id, agencyId, userId);
+    searchPackageDetails();
+    //id, agencyId, userId)
   }, []);
 
   useEffect(() => {
@@ -64,11 +69,15 @@ const Package = () => {
     }
   }, [packageDetails]);
 
+  if (loading) {
+    return <PackageSkeleton />;
+  }
+
   return (
     <div>
       <CoverImages imagesByCategory={imagesByCategory} />
       <PackageDescription packageDetails={packageDetails} />
-      <Itinerary itineraryData={packageDetails?.days} />
+      <Itinerary packageDetail={packageDetails} />
     </div>
   );
 };

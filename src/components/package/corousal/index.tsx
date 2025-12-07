@@ -6,7 +6,7 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   images: any;
-  imgIndex: number;
+  imgIndex: number | any;
 }
 
 const FullScreenCarousel: React.FC<ModalProps> = ({
@@ -15,33 +15,32 @@ const FullScreenCarousel: React.FC<ModalProps> = ({
   onClose,
   imgIndex,
 }) => {
-  const [currentIndex, setCurrentIndex] = useState(imgIndex);
+  const [currentIndex, setCurrentIndex] = useState<any>(undefined);
   const [imagesList, setImagesList] = useState([]);
 
 
   console.log('imagesList', imagesList);
-  console.log('images', images,imgIndex);
+  console.log('images', images, imgIndex);
 
- useEffect(()=> {
-  setCurrentIndex(0)
-  setImagesList([])
- },[])
+  useEffect(() => {
+    setCurrentIndex(undefined)
+    setImagesList([])
+  }, [])
 
   useEffect(() => {
     setImagesList(images);
     setCurrentIndex(imgIndex)
-  }, [images,imgIndex]);
+  }, [images, imgIndex]);
 
 
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex: number) =>
-      prevIndex === 0 ? imagesList.length - 1 : prevIndex - 1
+      prevIndex === undefined ? imagesList.length - 1 : prevIndex - 1
     );
   };
 
   const goToNext = () => {
-    console.log('goToNext', imagesList);
     setCurrentIndex((prevIndex: number) =>
       prevIndex === imagesList.length - 1 ? 0 : prevIndex + 1
     );
@@ -53,8 +52,6 @@ const FullScreenCarousel: React.FC<ModalProps> = ({
   };
 
   if (!isOpen) return null;
-
-  if(currentIndex === 0 ) return <p>Loading...</p>
 
   return (
     <div
@@ -84,6 +81,9 @@ const FullScreenCarousel: React.FC<ModalProps> = ({
       </button>
 
       <div className={styles.imageWrapper}>
+        <>
+          {console.log("asdasdsadsadasdsadas", imagesList[currentIndex])}
+        </>
         <img
           src={imagesList[currentIndex]}
           alt={`Slide ${currentIndex + 1}`}

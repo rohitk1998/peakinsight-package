@@ -1,0 +1,78 @@
+.Container {
+    text-align: left;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.dayContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.itineraryContent {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 24px 0;
+    width: 100%;
+}
+
+.section {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    // Remove extra margins from nested components
+    :global(.accordion) {
+        margin-bottom: 0;
+        padding: 0;
+    }
+
+    :global(.stay-accordion),
+    :global(.transfer-accordion) {
+        margin-top: 0;
+    }
+}
+
+.sectionHeader {
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f3f4f6;
+
+    .sectionTitle {
+        font-size: 16px;
+        font-weight: 700;
+        color: #374151;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+
+        &::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 16px;
+            background: #ea580c; // Primary orange
+            border-radius: 2px;
+            margin-right: 12px;
+        }
+    }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+    .itineraryContent {
+        gap: 24px;
+        padding: 16px 0;
+    }
+
+    .Container {
+        gap: 24px;
+    }
+}

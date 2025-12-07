@@ -1,25 +1,48 @@
 import React, { useState } from 'react';
 import styles from './itinerary.module.scss';
-import DayDetails from './day-details';
+import ItineraryDetails from './itinerary-details';
+import SummarizedView from '../summarized-view';
+import ActivityDetail from '../activitydetail';
+import Stay from '../stay';
+import TransferGrid from '../transfer/TransferGrid';
+
+const tabs = [
+  {
+    id: 1,
+    name: 'Itinerary'
+  },
+  {
+    id: 2,
+    name: 'Summarised View'
+  },
+  {
+    id: 3,
+    name: 'Activities'
+  },
+  {
+    id: 4,
+    name: 'Stay'
+  },
+  {
+    id: 5,
+    name: 'Transfers'
+  }
+]
 
 interface ItineraryProps {
-  itineraryData: any[]; 
+  packageDetail: any;
 }
 
-const Itinerary: React.FC<ItineraryProps> = ({ itineraryData }) => {
-  const [selectedDay, setSelectedDay] = useState(1); 
+const Itinerary: React.FC<ItineraryProps> = ({ packageDetail }) => {
+  const [activetab, setActiveTab] = useState(1);
 
-  if (!itineraryData || itineraryData.length === 0) {
+  if (!packageDetail || packageDetail?.days?.length === 0) {
     return (
       <div className={styles.itineraryContainer}>
         <p>No itinerary data available</p>
       </div>
     );
   }
-
-  const selectedDayData = itineraryData.find(
-    (day) => day.dayNumber === selectedDay
-  );
 
   return (
     <div className={styles.itineraryContainer}>
@@ -31,21 +54,23 @@ const Itinerary: React.FC<ItineraryProps> = ({ itineraryData }) => {
         </div>
 
         <div className={styles.tabs}>
-          {itineraryData.map((day) => (
+          {tabs.map((tab) => (
             <button
-              key={day.dayNumber}
-              className={`${styles.tab} ${
-                selectedDay === day.dayNumber ? styles.active : ''
-              }`}
-              onClick={() => setSelectedDay(day.dayNumber)}
+              key={tab.id}
+              className={`${styles.tab} ${activetab === tab.id ? styles.active : ''
+                }`}
+              onClick={() => setActiveTab(tab.id)}
             >
-              <span className={styles.dayNumber}>Day {day.dayNumber}</span>
+              <span className={styles.dayNumber}>{tab.name}</span>
             </button>
           ))}
         </div>
-
         <div className={styles.tabContent}>
-          {selectedDayData && <DayDetails dayData={selectedDayData} />}
+          {activetab === 1 && <ItineraryDetails packageDetail={packageDetail} />}
+          {activetab === 2 && <SummarizedView packageDetail={packageDetail} />}
+          {activetab === 3 && <ActivityDetail items={packageDetail?.days} />}
+          {activetab === 4 && <Stay days={packageDetail?.days} />}
+          {activetab === 5 && <TransferGrid days={packageDetail?.days} />}
         </div>
       </div>
     </div>

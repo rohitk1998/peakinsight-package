@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './modal-gallery.module.scss';
 import FullScreenCarousel from '../corousal';
+import Skeleton from '../../common/Skeleton';
 
 interface ModalProps {
   isOpen: boolean;
@@ -9,11 +10,14 @@ interface ModalProps {
   activeCategory: string;
 }
 
-const ModalGallery: React.FC<ModalProps> = ({ isOpen, onClose, allbum,activeCategory }) => {
+const ModalGallery: React.FC<ModalProps> = ({ isOpen, onClose, allbum, activeCategory }) => {
   const [activeCategoryChosen, setActiveCategoryChosen] = useState<string>('all');
   const [images, setImages] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [corousalImgIndex, setCorousalImgIndex] = useState(0);
+  const [corousalImgIndex, setCorousalImgIndex] = useState<number | undefined>(undefined);
+  const [loadedImages, setLoadedImages] = useState(
+    new Array(images.length).fill(false)
+  );
 
   const openModal = (index: number) => {
     setCorousalImgIndex(index);
@@ -26,17 +30,26 @@ const ModalGallery: React.FC<ModalProps> = ({ isOpen, onClose, allbum,activeCate
 
   useEffect(() => {
     setActiveCategoryChosen(activeCategory);
-  }, [isOpen,activeCategory]);
+  }, [isOpen, activeCategory]);
 
-  useEffect(()=>{
-    if(activeCategoryChosen === 'all'){
+  useEffect(() => {
+    setLoadedImages(new Array(images.length).fill(false));
+    if (activeCategoryChosen === 'all') {
       setImages(allbum?.all);
-    }else if(activeCategoryChosen === 'stays'){
+    } else if (activeCategoryChosen === 'stays') {
       setImages(allbum?.stays);
-    }else if(activeCategoryChosen === 'activities'){
+    } else if (activeCategoryChosen === 'activities') {
       setImages(allbum?.activities);
     }
-  },[activeCategoryChosen])
+  }, [activeCategoryChosen, allbum])
+
+  const handleImageLoad = (index: number) => {
+    setLoadedImages((prev) => {
+      const updated = [...prev];
+      updated[index] = true;
+      return updated;
+    });
+  };
 
   if (!isOpen) return null;
 
@@ -96,8 +109,8 @@ const ModalGallery: React.FC<ModalProps> = ({ isOpen, onClose, allbum,activeCate
                 {categorykey.toLowerCase() === 'stays'
                   ? `(${allbum?.stays.length})`
                   : categorykey.toLowerCase() === 'activities'
-                  ? `(${allbum?.activities.length})`
-                  : `(${allbum?.all.length})`}
+                    ? `(${allbum?.activities.length})`
+                    : `(${allbum?.all.length})`}
               </h2>
             );
           })}
@@ -111,23 +124,41 @@ const ModalGallery: React.FC<ModalProps> = ({ isOpen, onClose, allbum,activeCate
                 openModal(index);
               }}
             >
+              {!loadedImages[index] && (
+                <Skeleton
+                  width="100%"
+                  height="100%"
+                  borderRadius="8px"
+                  className='style.modalImageSkelton'
+                />
+              )}
               <img
                 loading="lazy"
                 decoding="async"
                 className={styles.modalImage}
                 src={image}
-                alt={''}
+                alt=""
+                onLoad={() => handleImageLoad(index)}
+                onError={() => handleImageLoad(index)}
+                style={{
+                  opacity: loadedImages[index] ? 1 : 0,
+                  transition: "opacity 0.3s ease-in-out"
+                }}
               />
             </div>
           ))}
         </div>
       </div>
-      <FullScreenCarousel
-        images={images}
-        imgIndex={corousalImgIndex}
-        isOpen={isModalOpen}
-        onClose={closeModal}
-      />
+      {
+        corousalImgIndex !== undefined && (
+          <FullScreenCarousel
+            images={images}
+            imgIndex={corousalImgIndex}
+            isOpen={isModalOpen}
+            onClose={closeModal}
+          />
+        )
+      }
     </div>
   );
 };

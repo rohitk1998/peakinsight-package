@@ -27,16 +27,11 @@ export const useImagesData = (): UseImagesDataReturn => {
 
     const fetchImages = async () => {
 
-        console.log('callifn ');
-
         try {
             setLoading(true);
             setError(null); // Reset error state
 
             const response = await fetch('/images.json');
-
-            console.log('response', response);
-
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
