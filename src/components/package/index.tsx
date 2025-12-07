@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import CoverImages from './cover-images';
 // import axios from 'axios';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import PackageDescription from './package-features';
 import Itinerary from './itinerary';
 import PackageSkeleton from './PackageSkeleton';
 import data from "../../data.json"
 
 const Package = () => {
-  const { id, agencyId, userId }: any = useParams<{
-    id: string;
-    agencyId: string;
-    userId: string;
-  }>();
+  // const { id, agencyId, userId }: any = useParams<{
+  //   id: string;
+  //   agencyId: string;
+  //   userId: string;
+  // }>();
   const [packageDetails, setPackageDetails] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [imagesByCategory, setImagesByCategory] = useState<any>({
@@ -23,9 +23,9 @@ const Package = () => {
 
 
   const searchPackageDetails = async (
-    id: number,
-    agencyId: number,
-    userId: number
+    // id: number,
+    // agencyId: number,
+    // userId: number
   ) => {
     // const response = await axios.post(
     //   'https://crm.peakinsight.in/packages/search/details',
@@ -59,7 +59,8 @@ const Package = () => {
   };
 
   useEffect(() => {
-    searchPackageDetails(id, agencyId, userId);
+    searchPackageDetails();
+    //id, agencyId, userId)
   }, []);
 
   useEffect(() => {
