@@ -1,254 +1,305 @@
-// TransferGrid component styles
-$color-primary: #ea580c;
-$color-blue: #2563eb;
+// TransferGrid Styles
+$color-primary: #ea580c; // Orange-600
 $color-text-dark: #111827;
 $color-text-medium: #6b7280;
 $color-border: #e5e7eb;
 $color-bg-light: #f9fafb;
 $color-white: white;
-$color-success: #10b981;
 
-.transfer-grid-container {
+.transfer-accordion {
     width: 100%;
-    margin-top: 24px;
-    padding: 0 4px;
+    margin-top: 20px;
+    font-family: 'Inter', sans-serif;
 }
 
-.no-transfers {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 20px;
-    text-align: center;
-    background: $color-bg-light;
-    border-radius: 16px;
-    border: 1px dashed $color-border;
-
-    p {
-        color: $color-text-medium;
-        font-size: 16px;
-        margin: 0;
-    }
-}
-
-.transfer-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-
-    @media (max-width: 1024px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (max-width: 640px) {
-        grid-template-columns: 1fr;
-    }
-}
-
-.transfer-card {
-    position: relative;
+.accordion-item {
     background: $color-white;
-    border-radius: 20px;
+    border: 1px solid $color-border;
+    border-radius: 8px;
+    margin-bottom: 24px;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba($color-border, 0.6);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+    &.open {
+        border-color: #ddd;
+    }
+}
+
+.accordion-header {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    cursor: pointer;
+    background: $color-white;
+    transition: background 0.2s;
 
     &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-        border-color: rgba($color-primary, 0.3);
-
-        .card-header-bg {
-            opacity: 0.15;
-        }
+        background: $color-bg-light;
     }
 
-    .day-badge {
-        position: absolute;
-        top: 0;
-        left: 0;
-        background: $color-primary;
-        color: $color-white;
-        padding: 8px 16px;
-        border-bottom-right-radius: 16px;
-        font-size: 13px;
-        font-weight: 700;
-        z-index: 10;
-        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .verified-badge {
-        position: absolute;
-        top: 0;
-        right: 0;
-        color: $color-primary; // Changed icon color to primary for contrast
-        background: rgba($color-primary, 0.15); // Made background subtle
-        border-bottom-left-radius: 16px;
-        padding: 8px 12px;
-        // width: 28px; // Removed fixed width
-        // height: 28px; // Removed fixed height
+    .header-content {
         display: flex;
         align-items: center;
-        justify-content: center;
-        z-index: 10;
-        // box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.1); // Removed shadow for cleaner look
-    }
+        gap: 16px;
 
-    .card-header {
-        position: relative;
-        padding: 40px 24px 20px;
-        background: linear-gradient(135deg, rgba($color-primary, 0.03) 0%, rgba($color-white, 0.4) 100%); // Subtle background
-        border-bottom: 1px solid rgba($color-border, 0.5);
-
-        .card-header-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: radial-gradient($color-primary 1px, transparent 1px);
-            background-size: 20px 20px;
-            opacity: 0.08;
-            transition: opacity 0.3s ease;
+        .day-badge {
+            background: $color-primary;
+            color: $color-white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
-        .vehicle-icon-wrapper {
-            position: relative;
-            width: 56px;
-            height: 56px;
-            background: $color-white;
-            border-radius: 16px;
+        .day-title {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 600;
+            color: $color-text-dark;
+        }
+    }
+
+    .chevron {
+        color: #9ca3af;
+        transition: transform 0.3s ease;
+
+        &.rotated {
+            transform: rotate(180deg);
+        }
+    }
+}
+
+.accordion-content {
+    padding: 20px;
+    border-top: 1px solid $color-border;
+}
+
+.transfer-content-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.transfer-type-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #4b5563;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 8px;
+
+    .car-icon {
+        color: #6b7280;
+    }
+}
+
+.transfer-vehicle-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 24px 0;
+}
+
+// TIMELINE
+.timeline-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-left: 2px;
+}
+
+.timeline-point {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    z-index: 2;
+
+    .pin-icon-wrapper {
+        min-width: 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 28px; // Align with box (label + gap offset)
+
+        .pin-icon {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            background: $color-white;
+            height: 24px;
+            width: 24px;
             color: $color-primary;
-
-            svg {
-                width: 28px;
-                height: 28px;
-            }
-        }
-
-        .transfer-title {
-            position: relative;
-            font-size: 18px;
-            font-weight: 700;
-            color: $color-text-dark;
-            margin: 0 0 4px;
-            line-height: 1.3;
-        }
-
-        .transfer-subtitle {
-            position: relative;
-            font-size: 14px;
-            color: $color-text-medium;
-            font-weight: 500;
+            z-index: 10;
         }
     }
 
-    .card-body {
-        padding: 24px;
+    .location-content {
         flex: 1;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 4px;
 
-        .route-timeline {
-            position: relative;
-            padding-left: 20px;
-
-            &::before {
-                content: '';
-                position: absolute;
-                left: 7px;
-                top: 8px;
-                bottom: 8px;
-                width: 2px;
-                background: repeating-linear-gradient(to bottom, $color-border 0, $color-border 4px, transparent 4px, transparent 8px);
-            }
-
-            .route-point {
-                position: relative;
-                margin-bottom: 20px;
-
-                &:last-child {
-                    margin-bottom: 0;
-                }
-
-                &::after {
-                    content: '';
-                    position: absolute;
-                    left: -20px;
-                    top: 6px;
-                    width: 16px;
-                    height: 16px;
-                    border-radius: 50%;
-                    background: $color-white;
-                    border: 4px solid;
-                    box-sizing: border-box;
-                }
-
-                &.start::after {
-                    border-color: $color-primary;
-                }
-
-                &.end::after {
-                    border-color: $color-blue;
-                }
-
-                .point-label {
-                    display: block;
-                    font-size: 12px;
-                    color: $color-text-medium;
-                    margin-bottom: 2px;
-                    text-transform: uppercase;
-                    letter-spacing: 0.5px;
-                    font-weight: 600;
-                }
-
-                .point-name {
-                    display: block;
-                    font-size: 15px;
-                    font-weight: 600;
-                    color: $color-text-dark;
-                }
-            }
+        .label-badge {
+            font-size: 11px;
+            font-weight: 700;
+            color: #ea580c;
+            background: transparent; // Removed background
+            padding: 2px 0; // Removed horizontal padding
+            width: fit-content;
         }
 
-        .stops-section {
-            margin-top: auto;
-            padding-top: 16px;
-            border-top: 1px solid $color-border;
+        .location-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 14px 16px;
+            background: $color-white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
-            .stops-label {
-                display: block;
-                font-size: 12px;
-                color: $color-text-medium;
-                margin-bottom: 8px;
-                font-weight: 600;
+            .inline-icon {
+                color: #64748b;
+                min-width: 18px;
             }
 
-            .stops-tags {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 8px;
-
-                .stop-tag {
-                    background: $color-bg-light;
-                    color: $color-text-dark;
-                    padding: 4px 10px;
-                    border-radius: 6px;
-                    font-size: 12px;
-                    font-weight: 500;
-                    border: 1px solid $color-border;
-                }
+            .location-text {
+                font-size: 15px;
+                font-weight: 500;
+                color: #0f172a;
+                line-height: 1.4;
             }
+        }
+    }
+}
+
+
+// Add these styles to your existing TransferGrid.scss file
+
+// Update the .timeline-connector-area to add the gradient connector line and center content
+.timeline-connector-area {
+    position: relative;
+    margin-left: 12px;
+    padding: 16px 0 16px 28px;
+    min-height: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; // Center horizontally
+    justify-content: center;
+
+    .stops-toggle-wrapper {
+        display: flex;
+    }
+
+    .view-stops-btn {
+        position: relative;
+        left: 5%;
+        transform: translateX(-50%);
+        background: $color-white;
+        border-radius: 20px;
+        border: none;
+        padding: 10px 20px;
+        font-size: 12px;
+        color: #4b5563;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        cursor: pointer;
+        transition: all 0.2s;
+        z-index: 5;
+        outline: none;
+        outline-width: 0px;
+    }
+}
+
+// Add styling for the new map pin icons and stops list
+.map-pin-icon {
+    display: block;
+}
+
+// Stop point styling - similar to from/to but with dotted border
+.timeline-point.stop {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 12px;
+
+    .pin-icon-wrapper {
+        min-width: 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 14px;
+
+        .stop-dot {
+            width: 10px;
+            height: 10px;
+            background: #9ca3af;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px #9ca3af;
+        }
+    }
+
+    .location-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        .location-box.stop-box {
+            border: 1px dashed #d1d5db; // Dotted/dashed border
+            border-radius: 12px;
+            padding: 14px 16px;
+            background: $color-white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-right: 13%;
+            gap: 12px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+            .location-text {
+                font-size: 15px;
+                font-weight: 500;
+                color: #0f172a;
+                line-height: 1.4;
+            }
+        }
+    }
+}
+
+
+.stops-list-inline {
+    margin-left: 40px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-left: 16px;
+
+    .stop-item-inline {
+        font-size: 13px;
+        color: #4b5563;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        .stop-dot-small {
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border: 2px solid #9ca3af;
+            border-radius: 50%;
+            position: absolute;
+            left: -21px;
         }
     }
 }

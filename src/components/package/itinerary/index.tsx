@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './itinerary.module.scss';
 import ItineraryDetails from './itinerary-details';
 import SummarizedView from '../summarized-view';
@@ -35,6 +35,18 @@ interface ItineraryProps {
 
 const Itinerary: React.FC<ItineraryProps> = ({ packageDetail }) => {
   const [activetab, setActiveTab] = useState(1);
+  const tabsRef = useRef<HTMLDivElement>(null);
+
+  const handleTabClick = (tabId: number) => {
+    setActiveTab(tabId);
+    if (tabsRef.current) {
+      // Adjusted offset to 0 to align tabs exactly to top, hiding the 'Trip Duration' title
+      const yOffset = 0;
+      const element = tabsRef.current;
+      const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
 
   if (!packageDetail || packageDetail?.days?.length === 0) {
     return (
@@ -53,13 +65,13 @@ const Itinerary: React.FC<ItineraryProps> = ({ packageDetail }) => {
           </label>
         </div>
 
-        <div className={styles.tabs}>
+        <div className={styles.tabs} ref={tabsRef}>
           {tabs.map((tab) => (
             <button
               key={tab.id}
               className={`${styles.tab} ${activetab === tab.id ? styles.active : ''
                 }`}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => handleTabClick(tab.id)}
             >
               <span className={styles.dayNumber}>{tab.name}</span>
             </button>

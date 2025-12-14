@@ -16,6 +16,10 @@
         overflow-x: auto;
         padding: 1rem;
         background-color: #f3f3f3;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+
         @media (max-width: 768px) {
             gap: 0.25rem;
         }
@@ -39,7 +43,7 @@
         font-weight: 400;
         letter-spacing: 0.5px;
         height: 40px;
-        border:none;
+        border: none;
 
         &.active {
             color: #ffffff;
@@ -67,9 +71,9 @@
     }
 
     .tabContent {
-        background: white;
         border-radius: 1rem;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         overflow: hidden;
+        min-height: 100vh; // Ensure page is tall enough to scroll tabs to top
     }
 }

@@ -15,9 +15,22 @@ const ImageCard: React.FC<ImageCardProps> = ({
   className,
   onClick,
 }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   return (
     <div className={`${styles.imageCard} ${className || ''}`} onClick={onClick}>
-      <img loading="lazy" decoding="async" src={imageUrl} alt={title} />
+      <img
+        loading="lazy"
+        decoding="async"
+        src={imageUrl}
+        alt={title}
+        onLoad={() => setIsLoaded(true)}
+        onError={() => setIsLoaded(true)}
+        style={{
+          opacity: isLoaded ? 1 : 0,
+          transition: 'opacity 0.5s ease-in-out',
+        }}
+      />
       <div className={styles.overlay}>
         <h3 className={styles.title}>{title}</h3>
       </div>
