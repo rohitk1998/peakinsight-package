@@ -22,11 +22,7 @@ const Package = () => {
   });
 
 
-  const searchPackageDetails = async (
-    // id: number,
-    // agencyId: number,
-    // userId: number
-  ) => {
+  const searchPackageDetails = async () => {
     // const response = await axios.post(
     //   'https://crm.peakinsight.in/packages/search/details',
     //   {

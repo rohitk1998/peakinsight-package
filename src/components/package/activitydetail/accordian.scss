@@ -6,6 +6,7 @@ $color-bg-light: #f9fafb;
 $color-white: #ffffff;
 $color-border: #e5e7eb;
 
+// Existing accordion styles remain the same...
 .accordion {
   width: 100%;
   display: flex;
@@ -15,7 +16,6 @@ $color-border: #e5e7eb;
 
   .accordion-item {
     background: $color-white;
-    // border: 1px solid $color-border; // Removed as per request
     border-radius: 16px;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -23,7 +23,6 @@ $color-border: #e5e7eb;
 
     &:hover {
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      // border-color: $color-border; // Reset border color change on hover to match Stay
     }
 
     .accordion-header {
@@ -84,7 +83,7 @@ $color-border: #e5e7eb;
       background-color: $color-white;
 
       &.open {
-        max-height: 2000px; // Sufficient height for content
+        max-height: 2000px;
       }
 
       .content-wrapper {
@@ -116,35 +115,146 @@ $color-border: #e5e7eb;
   }
 }
 
-// Expanded View Styles
+// Updated Activity Card Styles
 .activity-expanded-view {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  padding: 20px 0;
+}
 
-  .activity-item-expanded {
+.activity-card {
+  background: $color-white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+
+  .card-header {
+    padding: 24px 24px 20px 24px;
     background: $color-white;
-    border-radius: 16px;
-    padding: 24px;
-    border: 1px solid $color-border;
 
     .activity-title {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 700;
       color: $color-text-dark;
-      margin-bottom: 12px;
+      margin: 0 0 12px 0;
+      line-height: 1.3;
     }
 
     .activity-description {
       font-size: 15px;
       line-height: 1.6;
       color: $color-text-medium;
-      margin-bottom: 20px;
+      margin: 0;
+    }
+  }
+
+  .card-image-container {
+    position: relative;
+    flex: 1;
+    min-height: 300px;
+    overflow: hidden;
+
+    .card-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
-    .activity-carousel-wrapper {
-      border-radius: 12px;
-      overflow: hidden;
+    .gallery-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: $color-text-dark;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+      &:hover {
+        background: $color-white;
+        color: $color-primary;
+        border-color: $color-primary;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(234, 88, 12, 0.2);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .activity-card {
+    min-height: 350px;
+
+    .card-header {
+      padding: 20px 20px 16px 20px;
+
+      .activity-title {
+        font-size: 18px;
+      }
+
+      .activity-description {
+        font-size: 14px;
+      }
+    }
+
+    .card-image-container {
+      min-height: 250px;
+
+      .gallery-btn {
+        padding: 8px 14px;
+        font-size: 13px;
+        top: 12px;
+        right: 12px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .activity-expanded-view {
+    gap: 16px;
+  }
+
+  .activity-card {
+    min-height: 320px;
+
+    .card-header {
+      padding: 16px;
+
+      .activity-title {
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+
+      .activity-description {
+        font-size: 13px;
+      }
+    }
+
+    .card-image-container {
+      min-height: 220px;
     }
   }
 }

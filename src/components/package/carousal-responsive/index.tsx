@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './index.scss';
 import FullScreenCarousel from '../corousal';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+
 
 interface CarouselProps {
   images: string[];
@@ -12,10 +12,33 @@ interface CarouselProps {
 const CarouselResponsive = ({ images, dayNumber, title }: CarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const hasInitialized = useRef(false);
 
   if (!images || images.length === 0) return null;
 
   const showControls = images.length > 1;
+
+  useEffect(() => {
+    if (!showControls || isPaused) return;
+
+    const delay = hasInitialized.current ? 0 : Math.random() * 3000;
+    let intervalId: ReturnType<typeof setInterval>;
+
+    const timeoutId = setTimeout(() => {
+      hasInitialized.current = true;
+      intervalId = setInterval(() => {
+        setCurrentIndex((prevIndex) =>
+          prevIndex === images.length - 1 ? 0 : prevIndex + 1
+        );
+      }, 3000);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [images.length, isPaused, showControls]);
 
   const goToPrevious = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -42,14 +65,18 @@ const CarouselResponsive = ({ images, dayNumber, title }: CarouselProps) => {
 
   return (
     <>
-      <div className="carousel-container" >
+      <div
+        className="carousel-container"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
         <div className="carousel">
-          <div
-            className="carousel-inner"
-            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-          >
+          <div className="carousel-inner">
             {images.map((slide: string, index: number) => (
-              <div key={`${slide}-${index}`} className="carousel-slide">
+              <div
+                key={`${slide}-${index}`}
+                className={`carousel-slide ${index === currentIndex ? 'active' : ''}`}
+              >
                 <div className="slide-content">
                   <img src={slide} alt={`Slide ${index + 1}`} />
                 </div>
@@ -58,12 +85,12 @@ const CarouselResponsive = ({ images, dayNumber, title }: CarouselProps) => {
           </div>
 
           {/* Day Info Overlay (Bottom Left) */}
-          {dayNumber && (
+          {/* {dayNumber && (
             <div className="day-info-overlay">
               <span className="day-number">Day {dayNumber}</span>
               {title && <span className="day-title">{title}</span>}
             </div>
-          )}
+          )} */}
 
           {/* Stories View (Bottom Right) */}
           {images.length > 1 && (
@@ -89,7 +116,20 @@ const CarouselResponsive = ({ images, dayNumber, title }: CarouselProps) => {
                 onClick={goToPrevious}
                 aria-label="Previous slide"
               >
-                <ChevronLeft size={24} />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="m12 19-7-7 7-7" />
+                  <path d="M19 12H5" />
+                </svg>
               </button>
 
               <button
@@ -97,7 +137,20 @@ const CarouselResponsive = ({ images, dayNumber, title }: CarouselProps) => {
                 onClick={goToNext}
                 aria-label="Next slide"
               >
-                <ChevronRight size={24} />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
               </button>
 
               <div className="carousel-indicators">

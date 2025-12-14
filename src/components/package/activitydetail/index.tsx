@@ -21,12 +21,21 @@ const ActivityDetail: React.FC<AccordionProps> = ({ items, expandedView = false 
         {items?.map((item: any, index: number) => (
           <div key={index}>
             {item?.activities?.map((activityItem: any, idx: number) => (
-              <div key={idx} className="activity-item-expanded">
-                <h4 className="activity-title">{activityItem?.name}</h4>
-                <p className="activity-description">{activityItem?.description}</p>
+              <div key={idx} className="activity-card">
+                <div className="card-header">
+                  <h4 className="activity-title">{activityItem?.name}</h4>
+                  <p className="activity-description">{activityItem?.description}</p>
+                </div>
                 {activityItem?.images?.length !== 0 && (
-                  <div className="activity-carousel-wrapper">
-                    <CarouselResponsive images={activityItem?.images} />
+                  <div className="card-image-container">
+                    <img
+                      className="card-image"
+                      src={activityItem?.images[0]}
+                      alt={activityItem?.name || "Activity"}
+                    />
+                    <button className="gallery-btn">
+                      View Gallery
+                    </button>
                   </div>
                 )}
               </div>

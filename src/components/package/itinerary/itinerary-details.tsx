@@ -4,7 +4,7 @@ import CarouselResponsive from "../carousal-responsive/index";
 import Accordion from '../accordian';
 import ActivityDetail from '../activitydetail';
 import Stay from '../stay';
-import Transfer from '../transfer';
+import TransferGrid from '../transfer/TransferGrid';
 
 interface ItineraryProps {
   packageDetail: any;
@@ -44,7 +44,7 @@ const ItineraryDetail = ({ day, packageDetail }: { day: any, packageDetail: any 
             <div className={styles.sectionHeader}>
               <h3 className={styles.sectionTitle}>Transfers</h3>
             </div>
-            <Transfer days={[day]} expandedView={true} />
+            <TransferGrid days={[day]} expandedView={true} />
           </div>
         )
       }
@@ -67,7 +67,7 @@ const ItineraryDetails: React.FC<ItineraryProps> = ({ packageDetail }) => {
             <CarouselResponsive
               images={day?.images}
               dayNumber={day?.dayNumber}
-              title={day?.title}
+              title={day?.location}
             />
             <Accordion
               title={`Day ${day?.dayNumber} `}
