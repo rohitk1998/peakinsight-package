@@ -146,6 +146,8 @@ $color-text-light-grey: #9ca3af;
     transition: all 0.2s;
     backdrop-filter: blur(4px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    outline: none;
+    outline-width: 0px;
 
     &:hover {
       background: $color-white;
@@ -192,6 +194,7 @@ $color-text-light-grey: #9ca3af;
         color: $color-text-dark;
         margin: 0 0 8px 0;
         letter-spacing: -0.5px;
+        text-align: start;
       }
 
       .stay-subtitle {

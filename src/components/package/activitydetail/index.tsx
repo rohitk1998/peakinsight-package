@@ -8,6 +8,79 @@ interface AccordionProps {
   expandedView?: boolean;
 }
 
+const ActivityDescription = ({ description }: { description: string }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const WORD_LIMIT = 100;
+
+  const words = description?.split(' ') || [];
+  const isLong = words.length > WORD_LIMIT;
+  const displayText = isExpanded ? description : words.slice(0, WORD_LIMIT).join(' ') + (isLong ? '...' : '');
+
+  return (
+    <div className="description-container">
+      <p className="description">
+        {displayText}
+        {isLong && (
+          <span className="read-more" onClick={(e) => { e.stopPropagation(); setIsExpanded(!isExpanded); }}>
+            {isExpanded ? ' Read Less' : ' Read More'}
+          </span>
+        )}
+      </p>
+    </div>
+  );
+};
+
+const ExperiencesSection = ({ experiences }: { experiences: any[] }) => {
+  const [startIndex, setStartIndex] = useState(0);
+  const VISIBLE_COUNT = 4;
+  const displayItems = experiences.length > 0 ? experiences : [];
+
+  if (displayItems.length === 0) return null;
+
+  const nextSlide = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setStartIndex((prev) => (prev + 1) % displayItems.length);
+  };
+
+  const prevSlide = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setStartIndex((prev) => (prev - 1 + displayItems.length) % displayItems.length);
+  };
+
+  const getVisibleItems = () => {
+    const items = [];
+    for (let i = 0; i < VISIBLE_COUNT; i++) {
+      const index = (startIndex + i) % displayItems.length;
+      items.push(displayItems[index]);
+    }
+    return items;
+  };
+
+  const visibleItems = getVisibleItems();
+
+  return (
+    <div className="experiences-section">
+      <div className="section-header">
+        <h4>You will be covering these amazing experiences</h4>
+        {/* <div className="nav-arrows">
+          <button className="nav-btn prev" onClick={prevSlide}>‹</button>
+          <button className="nav-btn next" onClick={nextSlide}>›</button>
+        </div> */}
+      </div>
+      <div className="experiences-list">
+        {visibleItems.map((exp: any, i: number) => (
+          <div key={`${startIndex}-${i}`} className="experience-card">
+            <div className="img-wrap">
+              <img src={exp.image || "https://placehold.co/150x200"} alt={exp.title} />
+            </div>
+            <span className="exp-index">{(startIndex + i) % displayItems.length + 1}. {exp.title}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const ActivityDetail: React.FC<AccordionProps> = ({ items, expandedView = false }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
 
@@ -73,12 +146,20 @@ const ActivityDetail: React.FC<AccordionProps> = ({ items, expandedView = false 
               <div className="content-wrapper">
                 {item.activities.map((activityItem: any, idx: number) => (
                   <div key={idx} className="activity-details">
-                    <p className="description">{activityItem.description}</p>
+                    <h2 className="main-activity-title">{activityItem.title || item.title}</h2>
                     {activityItem.images?.length > 0 && (
                       <div className="carousel-wrapper">
                         <CarouselResponsive images={activityItem.images} />
                       </div>
                     )}
+                    <ActivityDescription description={activityItem.description} />
+                    <ExperiencesSection experiences={activityItem.experiences || [
+                      { title: "Tsemo Castle", image: activityItem.images?.[0] || "" },
+                      { title: "Shanti Stupa", image: activityItem.images?.[1] || "" },
+                      { title: "Leh Palace", image: activityItem.images?.[2] || "" },
+                      { title: "Market", image: activityItem.images?.[3] || "" },
+                      { title: "Monastery", image: activityItem.images?.[0] || "" }
+                    ]} />
                   </div>
                 ))}
               </div>

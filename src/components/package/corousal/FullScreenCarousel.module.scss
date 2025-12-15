@@ -19,6 +19,8 @@
   background: none;
   border: none;
   cursor: pointer;
+  outline: none;
+  outline-width: 0px !important;
 
   &:hover {
     color: #ccc;
