@@ -83,33 +83,157 @@ $color-border: #e5e7eb;
       background-color: $color-white;
 
       &.open {
-        max-height: 2000px;
+        max-height: 3000px; // Increased max-height for larger content
       }
 
       .content-wrapper {
-        padding: 0 24px 24px;
+        padding: 0 24px 32px;
         border-top: 1px solid $color-bg-light;
       }
 
       .activity-details {
-        padding-top: 20px;
+        padding-top: 24px;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        text-align: center;
-      }
+        align-items: flex-start; // Left align by default
+        text-align: left;
 
-      .description {
-        font-size: 15px;
-        line-height: 1.6;
-        color: $color-text-medium;
-        margin-bottom: 24px;
-      }
+        // Removed activity-header-label
 
-      .carousel-wrapper {
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        .main-activity-title {
+          font-size: 20px;
+          font-weight: 700;
+          color: $color-text-dark;
+          margin: 0 0 20px 0;
+        }
+
+        .carousel-wrapper {
+          width: 100%;
+          border-radius: 12px;
+          overflow: hidden;
+          margin-bottom: 20px;
+          // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); // Shadow might be handled by inner component or not needed
+        }
+
+        .description-container {
+          width: 100%;
+          margin-bottom: 32px;
+
+          .description {
+            font-size: 15px;
+            line-height: 1.6;
+            color: $color-text-medium;
+            margin: 0;
+
+            .read-more {
+              font-weight: 600;
+              color: $color-text-dark;
+              cursor: pointer;
+              margin-left: 4px;
+
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+          }
+        }
+
+        .experiences-section {
+          width: 100%;
+          padding-top: 24px;
+          border-top: 1px solid $color-border;
+
+          .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+
+            h4 {
+              font-size: 18px;
+              font-weight: 700;
+              color: $color-text-dark;
+              margin: 0;
+            }
+
+            .nav-arrows {
+              display: flex;
+              gap: 12px; // slightly increased gap
+
+              .nav-btn {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                border: 1px solid #e5e7eb; // Default light grey border
+                background: transparent;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                font-size: 18px;
+                color: #111827; // Black/dark grey
+                transition: all 0.2s ease;
+
+                &:hover {
+                  background: #f3f4f6;
+                  border-color: #d1d5db;
+                }
+
+                &:active {
+                  transform: scale(0.95);
+                }
+
+                // Removed .next specific coloring to keep uniform as requested "black or grey"
+              }
+            }
+          }
+
+          .experiences-list {
+            display: flex;
+            gap: 16px;
+            // removed overflow-x: auto since we are now controlling it manually/limiting items
+            padding-bottom: 6px;
+
+            &::-webkit-scrollbar {
+              display: none;
+            }
+
+            .experience-card {
+              flex: 1; // Distribute space evenly since we show a fixed count (4)
+              min-width: 0; // Allow flex items to shrink below content size if needed
+              display: flex;
+              flex-direction: column;
+              gap: 12px;
+
+              .img-wrap {
+                width: 100%;
+                aspect-ratio: 4/5; // Consistent aspect ratio
+                border-radius: 12px;
+                overflow: hidden;
+
+                img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  transition: transform 0.3s ease;
+                }
+              }
+
+              &:hover .img-wrap img {
+                transform: scale(1.05);
+              }
+
+              .exp-index {
+                font-size: 14px;
+                font-weight: 600;
+                color: $color-text-dark;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+            }
+          }
+        }
       }
     }
   }

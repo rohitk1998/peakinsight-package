@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, ImageIcon, Coffee, UtensilsCrossed, Moon, Star, MapPin, Clock } from 'lucide-react';
 import "./index.scss"
+import FullScreenCarousel from '../corousal/index';
 
 interface StayProps {
   days: any;
@@ -8,6 +9,9 @@ interface StayProps {
 }
 
 const Stay: React.FC<StayProps> = ({ days, expandedView = false }) => {
+
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [selectedImages, setSelectedImages] = useState([]);
   // Find the first index that has a stay
   const getInitialOpenIndex = () => {
     if (!days || days.length === 0) return -1;
@@ -41,7 +45,10 @@ const Stay: React.FC<StayProps> = ({ days, expandedView = false }) => {
         )}
         <div className="hero-overlay"></div>
 
-        <button className="gallery-btn">
+        <button className="gallery-btn" onClick={() => {
+          setSelectedImages(stay.images);
+          setShowImageModal(true);
+        }}>
           <ImageIcon size={16} />
           View Gallery
         </button>
@@ -96,6 +103,12 @@ const Stay: React.FC<StayProps> = ({ days, expandedView = false }) => {
           </div>
         </div>
       </div>
+      <FullScreenCarousel
+        images={selectedImages}
+        isOpen={showImageModal}
+        imgIndex={selectedImages.indexOf(selectedImages[0])}
+        onClose={() => setShowImageModal(false)}
+      />
     </div>
   );
 
