@@ -66,8 +66,6 @@ const ItineraryDetails: React.FC<ItineraryProps> = ({ packageDetail }) => {
           <div key={index} className={styles.dayContainer}>
             <CarouselResponsive
               images={day?.images}
-              dayNumber={day?.dayNumber}
-              title={day?.location}
             />
             <Accordion
               title={`Day ${day?.dayNumber} `}
