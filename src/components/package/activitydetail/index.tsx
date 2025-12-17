@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import './accordian.scss';
 import CarouselResponsive from '../carousal-responsive';
+import FullScreenCarousel from '../corousal';
 
 interface AccordionProps {
   items: any[];
@@ -83,6 +84,8 @@ const ExperiencesSection = ({ experiences }: { experiences: any[] }) => {
 
 const ActivityDetail: React.FC<AccordionProps> = ({ items, expandedView = false }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedImages, setSelectedImages] = useState([]);
 
   const toggleItem = (index: number) => {
     setActiveIndex(activeIndex === index ? null : index);
@@ -92,28 +95,48 @@ const ActivityDetail: React.FC<AccordionProps> = ({ items, expandedView = false 
     return (
       <div className="activity-expanded-view">
         {items?.map((item: any, index: number) => (
-          <div key={index}>
+          <React.Fragment key={index}>
             {item?.activities?.map((activityItem: any, idx: number) => (
-              <div key={idx} className="activity-card">
-                <div className="card-header">
-                  <h4 className="activity-title">{activityItem?.name}</h4>
-                  <p className="activity-description">{activityItem?.description}</p>
-                </div>
-                {activityItem?.images?.length !== 0 && (
-                  <div className="card-image-container">
-                    <img
-                      className="card-image"
-                      src={activityItem?.images[0]}
-                      alt={activityItem?.name || "Activity"}
-                    />
-                    <button className="gallery-btn">
-                      View Gallery
-                    </button>
+              <div key={`${index}-${idx}`} className="expanded-activity-card">
+                <div className="card-image-wrapper">
+                  <img
+                    src={activityItem?.images?.[0] || "https://placehold.co/600x400"}
+                    alt={activityItem?.name || "Activity"}
+                    className="card-bg-image"
+                  />
+                  <div className="card-overlay"></div>
+                  <div className="card-content-overlay">
+                    <div className="text-content">
+                      <span className="day-label">DAY {item.dayNumber}</span>
+                      <h3 className="card-title">{activityItem?.name || activityItem?.title}</h3>
+                      <p className="card-description">
+                        {activityItem?.description?.slice(0, 80)}...
+                      </p>
+                    </div>
+                    {activityItem?.images?.length > 0 && (
+                      <button className="view-gallery-btn" onClick={() => {
+                        setSelectedImages(activityItem?.images)
+                        setOpenModal(true)
+                      }}>
+                        View Gallery
+                      </button>
+                    )}
                   </div>
-                )}
+                </div>
+
               </div>
             ))}
-          </div>
+            {
+              selectedImages?.length > 0 && (
+                <FullScreenCarousel
+                  images={selectedImages}
+                  isOpen={openModal}
+                  onClose={() => setOpenModal(false)}
+                  imgIndex={0}
+                />
+              )
+            }
+          </React.Fragment>
         ))}
       </div>
     );
@@ -127,42 +150,38 @@ const ActivityDetail: React.FC<AccordionProps> = ({ items, expandedView = false 
         const isOpen = activeIndex === index;
 
         return (
-          <div className={`accordion-item ${isOpen ? 'active' : ''}`} key={index}>
-            <button
-              className="accordion-header"
-              onClick={() => toggleItem(index)}
-            >
-              <div className="header-content">
-                <span className="day-badge">DAY {item.dayNumber}</span>
-                <h3 className="day-title">{item.title}</h3>
+          <div className='container-activity'>
+            <div key={index} className={`accordion-item ${isOpen ? 'open' : ''}`}>
+              <div className="accordion-header" onClick={() => toggleItem(index)}>
+                <div className="header-content">
+                  <span className="day-badge">DAY {item.dayNumber}</span>
+                  <h3 className="day-title">{item.title}</h3>
+                </div>
+                <ChevronDown className={`chevron ${isOpen ? 'rotated' : ''}`} />
               </div>
-              <ChevronDown
-                className={`icon ${isOpen ? 'rotate' : ''}`}
-                size={20}
-              />
-            </button>
 
-            <div className={`accordion-content ${isOpen ? 'open' : ''}`}>
-              <div className="content-wrapper">
-                {item.activities.map((activityItem: any, idx: number) => (
-                  <div key={idx} className="activity-details">
-                    <h2 className="main-activity-title">{activityItem.title || item.title}</h2>
-                    {activityItem.images?.length > 0 && (
-                      <div className="carousel-wrapper">
-                        <CarouselResponsive images={activityItem.images} />
-                      </div>
-                    )}
-                    <ActivityDescription description={activityItem.description} />
-                    <ExperiencesSection experiences={activityItem.experiences || [
-                      { title: "Tsemo Castle", image: activityItem.images?.[0] || "" },
-                      { title: "Shanti Stupa", image: activityItem.images?.[1] || "" },
-                      { title: "Leh Palace", image: activityItem.images?.[2] || "" },
-                      { title: "Market", image: activityItem.images?.[3] || "" },
-                      { title: "Monastery", image: activityItem.images?.[0] || "" }
-                    ]} />
-                  </div>
-                ))}
-              </div>
+              {isOpen && (
+                <div className="accordion-content">
+                  {item.activities.map((activityItem: any, idx: number) => (
+                    <div key={idx} className="activity-details">
+                      <h2 className="main-activity-title">{activityItem.title || item.title}</h2>
+                      {activityItem.images?.length > 0 && (
+                        <div className="carousel-wrapper">
+                          <CarouselResponsive images={activityItem.images} />
+                        </div>
+                      )}
+                      <ActivityDescription description={activityItem.description} />
+                      <ExperiencesSection experiences={activityItem.experiences || [
+                        { title: "Tsemo Castle", image: activityItem.images?.[0] || "" },
+                        { title: "Shanti Stupa", image: activityItem.images?.[1] || "" },
+                        { title: "Leh Palace", image: activityItem.images?.[2] || "" },
+                        { title: "Market", image: activityItem.images?.[3] || "" },
+                        { title: "Monastery", image: activityItem.images?.[0] || "" }
+                      ]} />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         );
