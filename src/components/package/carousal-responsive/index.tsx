@@ -5,19 +5,16 @@ import FullScreenCarousel from '../corousal';
 
 interface CarouselProps {
   images: string[];
-  dayNumber?: number;
-  title?: string;
 }
 
-const CarouselResponsive = ({ images, dayNumber, title }: CarouselProps) => {
+const CarouselResponsive = ({ images }: CarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const hasInitialized = useRef(false);
 
-  if (!images || images.length === 0) return null;
-
-  const showControls = images.length > 1;
+  const safeImages = images || [];
+  const showControls = safeImages.length > 1;
 
   useEffect(() => {
     if (!showControls || isPaused) return;
@@ -29,7 +26,7 @@ const CarouselResponsive = ({ images, dayNumber, title }: CarouselProps) => {
       hasInitialized.current = true;
       intervalId = setInterval(() => {
         setCurrentIndex((prevIndex) =>
-          prevIndex === images.length - 1 ? 0 : prevIndex + 1
+          prevIndex === safeImages.length - 1 ? 0 : prevIndex + 1
         );
       }, 3000);
     }, delay);
@@ -38,19 +35,21 @@ const CarouselResponsive = ({ images, dayNumber, title }: CarouselProps) => {
       clearTimeout(timeoutId);
       if (intervalId) clearInterval(intervalId);
     };
-  }, [images.length, isPaused, showControls]);
+  }, [safeImages.length, isPaused, showControls]);
+
+  if (safeImages.length === 0) return null;
 
   const goToPrevious = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? safeImages.length - 1 : prevIndex - 1
     );
   };
 
   const goToNext = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      prevIndex === safeImages.length - 1 ? 0 : prevIndex + 1
     );
   };
 
@@ -72,7 +71,7 @@ const CarouselResponsive = ({ images, dayNumber, title }: CarouselProps) => {
       >
         <div className="carousel">
           <div className="carousel-inner">
-            {images.map((slide: string, index: number) => (
+            {safeImages.map((slide: string, index: number) => (
               <div
                 key={`${slide}-${index}`}
                 className={`carousel-slide ${index === currentIndex ? 'active' : ''}`}
@@ -84,25 +83,17 @@ const CarouselResponsive = ({ images, dayNumber, title }: CarouselProps) => {
             ))}
           </div>
 
-          {/* Day Info Overlay (Bottom Left) */}
-          {/* {dayNumber && (
-            <div className="day-info-overlay">
-              <span className="day-number">Day {dayNumber}</span>
-              {title && <span className="day-title">{title}</span>}
-            </div>
-          )} */}
-
           {/* Stories View (Bottom Right) */}
-          {images.length > 1 && (
+          {safeImages.length > 1 && (
             <div className="stories-container">
-              {images.slice(0, 3).map((img, idx) => (
+              {safeImages.slice(0, 3).map((img, idx) => (
                 <div key={idx} className="story-thumbnail" onClick={(e) => {
                   e.stopPropagation();
                   openModal();
                 }}>
                   <img src={img} alt={`Story ${idx + 1}`} />
-                  {idx === 2 && images.length > 3 && (
-                    <div className="more-overlay">+{images.length - 3}</div>
+                  {idx === 2 && safeImages.length > 3 && (
+                    <div className="more-overlay">+{safeImages.length - 3}</div>
                   )}
                 </div>
               ))}
@@ -154,7 +145,7 @@ const CarouselResponsive = ({ images, dayNumber, title }: CarouselProps) => {
               </button>
 
               <div className="carousel-indicators">
-                {images.map((_: string, index: number) => (
+                {safeImages.map((_: string, index: number) => (
                   <button
                     key={index}
                     className={`indicator ${index === currentIndex ? 'active' : ''}`}
@@ -171,7 +162,7 @@ const CarouselResponsive = ({ images, dayNumber, title }: CarouselProps) => {
       <FullScreenCarousel
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        images={images}
+        images={safeImages}
         imgIndex={currentIndex}
       />
     </>

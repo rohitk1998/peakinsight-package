@@ -32,21 +32,11 @@ const ActivityDescription = ({ description }: { description: string }) => {
 };
 
 const ExperiencesSection = ({ experiences }: { experiences: any[] }) => {
-  const [startIndex, setStartIndex] = useState(0);
+  const [startIndex] = useState(0);
   const VISIBLE_COUNT = 4;
   const displayItems = experiences.length > 0 ? experiences : [];
 
   if (displayItems.length === 0) return null;
-
-  const nextSlide = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setStartIndex((prev) => (prev + 1) % displayItems.length);
-  };
-
-  const prevSlide = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setStartIndex((prev) => (prev - 1 + displayItems.length) % displayItems.length);
-  };
 
   const getVisibleItems = () => {
     const items = [];
@@ -63,10 +53,6 @@ const ExperiencesSection = ({ experiences }: { experiences: any[] }) => {
     <div className="experiences-section">
       <div className="section-header">
         <h4>You will be covering these amazing experiences</h4>
-        {/* <div className="nav-arrows">
-          <button className="nav-btn prev" onClick={prevSlide}>‹</button>
-          <button className="nav-btn next" onClick={nextSlide}>›</button>
-        </div> */}
       </div>
       <div className="experiences-list">
         {visibleItems.map((exp: any, i: number) => (
