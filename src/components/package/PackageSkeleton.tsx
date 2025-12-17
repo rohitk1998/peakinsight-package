@@ -5,7 +5,7 @@ import featureStyles from './package-features/package-description.module.scss';
 
 const PackageSkeleton = () => {
     return (
-        <div style={{ paddingBottom: '50px', backgroundColor: '#ffffff' }}>
+        <div style={{ paddingBottom: '50px', }}>
             {/* Cover Images Skeleton */}
             <section className={coverStyles.coverImages}>
                 <div className={coverStyles.container}>

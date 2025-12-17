@@ -68,9 +68,15 @@
   transition: all 0.2s ease;
   backdrop-filter: blur(4px);
   opacity: 1;
+  border: 1px solid grey;
+  outline: none !important;
+  outline-width: 0px !important;
 
   &:hover {
     transform: translateY(-50%) scale(1.1);
+    outline: none !important;
+    outline-width: 0px !important;
+    border: 1px solid grey;
   }
 
   svg {
@@ -215,7 +221,7 @@
     img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
     }
 
     .more-overlay {
