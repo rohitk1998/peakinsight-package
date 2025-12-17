@@ -77,6 +77,7 @@ const Itinerary: React.FC<ItineraryProps> = ({ packageDetail }) => {
             </button>
           ))}
         </div>
+        {/* done well */}
         <div className={styles.tabContent}>
           {activetab === 1 && <ItineraryDetails packageDetail={packageDetail} />}
           {activetab === 2 && <SummarizedView packageDetail={packageDetail} />}
